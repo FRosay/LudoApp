@@ -7,13 +7,14 @@ class Game extends React.Component {
 
     super(props)
     this.state = {
-      name: null,
-      availability: 'Available'
+      name: this.props.name,
+      availability: this.props.availability
     }
 
   }
 
   render () {
+    // eslint-disable-next-line
     let availability = ''
 
     switch (this.state.availability) {
@@ -30,15 +31,15 @@ class Game extends React.Component {
           break;
           
         default:
-          availability = ''
+          availability = '?'
           break;
     }
 
     return (
         <div>
-            <h2>{ this.state.concept.name }</h2>
-            <br/>
+            <p>Nom : { this.state.name }</p>
             <p>Statut : { availability }</p>
+            <br/>
         </div>
     )
   }

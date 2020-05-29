@@ -8,7 +8,7 @@ class Member extends React.Component {
 
     super(props)
     this.state = {
-      member: null
+      members: []
     }
 
     this.getAllMembers()
@@ -28,9 +28,13 @@ class Member extends React.Component {
       return null
     }
     return (  
-        <div>
-            <h1>{this.state.member.name}</h1>
-        </div>
+      <div>
+        <h1>Tous les adhérent.e.s :</h1>
+        <br/>
+          {this.state.members.map((member, index) => {
+            return <Member key={index} firstName={member.firstName} lastName={member.lastName}></Member>
+          })}
+    </div>
     )
   }
  

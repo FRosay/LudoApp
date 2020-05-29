@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import Game from './game-object';
 
 
 class GameCreation extends React.Component {
@@ -9,7 +8,7 @@ class GameCreation extends React.Component {
 
         super(props)
         this.state = {
-            gameToCreate: new Game(),
+            gameToCreate: {name: '', availability: 'Available'}
         }
 
         this.createGame = this.createGame.bind(this)
@@ -45,7 +44,11 @@ class GameCreation extends React.Component {
 
     formSubmitHandler(e) {
         e.preventDefault();
-
+        if (this.state.gameToCreate.availability === undefined) {
+            let newGame = this.state.gameToCreate;
+            newGame.availability = 'Available'
+            this.setState({ gameToCreate: newGame });
+        }
         this.createGame()
     };
 

@@ -56,6 +56,14 @@ api.post('/game', async (req, res) => {
     }
 });
 
+api.delete('/game/delete/', async (req, res) => {
+    try {
+        await gameController.delete()
+    } catch(e) {
+        res.send(e).status(500)
+    }
+});
+
 
 // Members
 

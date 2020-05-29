@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var gameSchema = new Schema({
   name: String,
-  isAvailable: Boolean
+  availability: String
 });
 
 module.exports = mongoose.model('Game', gameSchema);
