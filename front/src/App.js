@@ -1,8 +1,11 @@
 import React from 'react';
-import GamesList from './components/game/games-list'
-import GameCreation from './components/game/game-creation'
-import MembersList from './components/member/members-list'
+import GamesList from './components/game/games-list';
+import GameCreation from './components/game/game-creation';
+import MembersList from './components/member/members-list';
 import MemberCreation from './components/member/member-creation';
+import LoansList from './components/loan/loans-list';
+import LoanCreation from './components/loan/loan-creation';
+import './App.css'
 
 
 class App extends React.Component {
@@ -16,9 +19,13 @@ class App extends React.Component {
   render () {
     return  (
       <div className="App">
-        <GameCreation /><MemberCreation />
-        <br/><br/>
-        <GamesList /><MembersList />
+        <div className='defaultDiv'>
+          <GameCreation /><MemberCreation /><LoanCreation />
+        </div>
+        <br/>
+        <div className='defaultDiv'>
+          <GamesList /><MembersList /><LoansList />
+        </div>
       </div>
     )
   }

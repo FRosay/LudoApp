@@ -7,8 +7,10 @@ class Member extends React.Component {
 
     super(props)
     this.state = {
+      memberId: this.props.memberId,
       firstName: this.props.firstName,
-      lastName: this.props.lastName
+      lastName: this.props.lastName,
+      fullName: (this.props.firstName + ' ' + this.props.lastName)
     }
 
   }
@@ -17,7 +19,6 @@ class Member extends React.Component {
     return (
         <div>
             <p>Prénom(s) : { this.state.firstName }</p>
-            <br/>
             <p>Nom : { this.state.lastName }</p>
         </div>
     )

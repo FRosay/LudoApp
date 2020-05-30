@@ -31,8 +31,8 @@ class MembersList extends React.Component {
     })
   }
 
-  async deleteAllMembers() {
-    await axios.delete('http://localhost:5000/member/delete/').then(this.getAllMembers())
+  deleteAllMembers() {
+    axios.delete('http://localhost:5000/member/delete/')
   }
 
   render () {
@@ -41,7 +41,7 @@ class MembersList extends React.Component {
         <h1>Tous les membres :</h1>
         <br/>
         {this.state.members.map((member, index) => {
-          return <Member key= { index } firstName= { member.firstName } lastName= { member.lastName }></Member>
+          return <Member key= { index } memberId= { member._id } firstName= { member.firstName } lastName= { member.lastName }></Member>
         })}
         <br/>
         <button onClick= { () => this.getAllMembers() }>Rafraîchir</button>

@@ -7,6 +7,7 @@ class Game extends React.Component {
 
     super(props)
     this.state = {
+      gameId: this.props.gameId,
       name: this.props.name,
       availability: this.props.availability
     }

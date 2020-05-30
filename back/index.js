@@ -1,5 +1,6 @@
 const MemberController = require("./member/member-controller.js");
 const GameController = require("./game/game-controller.js");
+const LoanController = require("./loan/loan-controller.js");
 const mongoose = require('mongoose')
 const express = require('express');
 const morgan = require('morgan')
@@ -8,6 +9,7 @@ const PORT = 5000;
 
 const memberController = new MemberController()
 const gameController = new GameController()
+const loanController = new LoanController()
 
 // Connection
 
@@ -84,6 +86,36 @@ api.post('/member', async (req, res) => {
 api.delete('/member/delete/', async (req, res) => {
     try {
         await memberController.delete()
+    } catch(e) {
+        res.send(e).status(500)
+    }
+});
+
+
+// Loans
+
+api.get('/loans', async (_, res) => {
+    const loans = await loanController.getAll()
+    res.json(loans);
+});
+
+api.get('/loan/getlast', async (_, res) => {
+    const lastLoan = await loanController.getLast()
+    res.json(lastLoan);
+});
+
+api.post('/loan', async (req, res) => {
+    try {
+        await loanController.create(req.body.loan)
+        res.sendStatus(200);
+    } catch(e) {
+        res.send(e).status(500);
+    }
+});
+
+api.delete('/loan/delete/', async (req, res) => {
+    try {
+        await loanController.delete()
     } catch(e) {
         res.send(e).status(500)
     }

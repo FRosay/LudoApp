@@ -41,7 +41,7 @@ class GamesList extends React.Component {
         <h1>Tous les jeux :</h1>
         <br/>
         {this.state.games.map((game, index) => {
-          return <Game key= { index } name= { game.name } availability= { game.availability }></Game>
+          return <Game key= { index } gameId= { game._id } name= { game.name } availability= { game.availability }></Game>
         })}
         <br/>
         <button onClick= { () => this.getAllGames() }>Rafraîchir</button>
