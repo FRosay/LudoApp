@@ -13,4 +13,5 @@ module.exports = class GameController {
 	async delete() {
 		await Game.find({}).remove()
 	}
+	
 }

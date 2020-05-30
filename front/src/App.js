@@ -1,6 +1,8 @@
 import React from 'react';
 import GamesList from './components/game/games-list'
 import GameCreation from './components/game/game-creation'
+import MembersList from './components/member/members-list'
+import MemberCreation from './components/member/member-creation';
 
 
 class App extends React.Component {
@@ -14,9 +16,9 @@ class App extends React.Component {
   render () {
     return  (
       <div className="App">
-        <GameCreation />
+        <GameCreation /><MemberCreation />
         <br/><br/>
-        <GamesList />
+        <GamesList /><MembersList />
       </div>
     )
   }

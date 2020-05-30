@@ -81,6 +81,14 @@ api.post('/member', async (req, res) => {
     }
 });
 
+api.delete('/member/delete/', async (req, res) => {
+    try {
+        await memberController.delete()
+    } catch(e) {
+        res.send(e).status(500)
+    }
+});
+
 
 // End of connection
 

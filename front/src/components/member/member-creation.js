@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import Member from './Member';
 
 
 class MemberCreation extends React.Component {
@@ -9,7 +8,7 @@ class MemberCreation extends React.Component {
 
         super(props)
         this.state = {
-            memberToCreate: new Member(),
+            memberToCreate: {firstName: '', lastName: ''}
         }
 
         this.createMember = this.createMember.bind(this)
@@ -20,7 +19,7 @@ class MemberCreation extends React.Component {
     createMember() {
         axios.post('http://localhost:5000/member', {
             member: this.state.memberToCreate
-        }).then(() => alert('Jeu ajouté : ' + this.state.memberToCreate.name + '.'))
+        }).then(() => alert('Membre ajouté : ' + this.state.memberToCreate.firstName + ' ' + this.state.memberToCreate.lastName + '.'))
     };
 
     formChangeHandler(e) {
@@ -29,11 +28,11 @@ class MemberCreation extends React.Component {
         let newMember = this.state.memberToCreate;
 
         switch (name) {
-            case 'name':
-                newMember.name = value
+            case 'firstName':
+                newMember.firstName = value
                 break;
-            case 'availability':
-                newMember.availability = value
+            case 'lastName':
+                newMember.lastName = value
                 break;
             default:
                 
@@ -45,37 +44,25 @@ class MemberCreation extends React.Component {
 
     formSubmitHandler(e) {
         e.preventDefault();
-
         this.createMember()
     };
 
-  render () {
-    let newMember = this.state.memberToCreate
-    
+  render () {    
     return (
       <form onSubmit= { this.formSubmitHandler }>
-        <p>Prénom(s) :</p>
+        <p>Prénom de l'adhérent.e :</p>
         <input
             type= 'text'
             name= 'firstName'
             onChange= { this.formChangeHandler }
         />
-        <p>Nom de famille :</p>
+        <br/>
+        <p>Nom de l'adhérent.e :</p>
         <input
             type= 'text'
             name= 'lastName'
             onChange= { this.formChangeHandler }
         />
-        <br/> <br/>
-
-        <p>Disponibilité :</p>
-        <select value= { newMember.availability }
-                onChange= { this.formChangeHandler }
-                name= 'availability'>
-            <option value= 'Available'>Disponible</option>
-            <option value= 'InRepair'>En réparation</option>
-            <option value= 'Loaned'>Prêté</option>
-        </select>
 
         <br/> <br/>
         

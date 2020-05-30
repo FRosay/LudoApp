@@ -7,8 +7,8 @@ class Member extends React.Component {
 
     super(props)
     this.state = {
-      firstName: '',
-      lastName: ''
+      firstName: this.props.firstName,
+      lastName: this.props.lastName
     }
 
   }
