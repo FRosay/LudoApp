@@ -20,7 +20,7 @@ class GamesList extends React.Component {
 
   
   getAllGames() {
-    return new Promise((resolve, reject) => {
+    return new Promise(() => {
       axios.get('http://localhost:5000/games')
         .then((response) => {
           console.log(response.data)
@@ -41,7 +41,9 @@ class GamesList extends React.Component {
         <h1>Tous les jeux :</h1>
         <br/>
         {this.state.games.map((game, index) => {
-          return <Game key= { index } gameId= { game._id } name= { game.name } availability= { game.availability }></Game>
+          return <Game key= { index } gameId= { game._id } name= { game.name } availability= { game.availability }
+                       gameType= { game.gameType } editor= { game.editor } author= { game.author } description= { game.description }>
+                 </Game>
         })}
         <br/>
         <button onClick= { () => this.getAllGames() }>Rafraîchir</button>

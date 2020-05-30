@@ -9,7 +9,11 @@ class Game extends React.Component {
     this.state = {
       gameId: this.props.gameId,
       name: this.props.name,
-      availability: this.props.availability
+      availability: this.props.availability,
+      gameType: this.props.gameType,
+      editor: this.props.editor,
+      author: this.props.author,
+      description: this.props.description,
     }
 
   }
@@ -40,6 +44,10 @@ class Game extends React.Component {
         <div>
             <p>Nom : { this.state.name }</p>
             <p>Statut : { availability }</p>
+            <p>Type : { this.state.gameType }</p>
+            <p>Edité par : { this.state.editor }</p>
+            <p>Créé par : { this.state.author }</p>
+            <p>Description : { this.state.description }</p>
             <br/>
         </div>
     )

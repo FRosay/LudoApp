@@ -20,9 +20,7 @@ class Loan extends React.Component {
 //<p>Prêté à : { this.state.member.fullName }</p>
   render () {
     let startDate = new Date(this.state.startDate).toLocaleDateString()
-    //startDate = startDate.toLocaleDateString()
-    let endDate = new Date(this.state.endDate)
-    endDate = endDate.toLocaleDateString()
+    let endDate = new Date(this.state.endDate).toLocaleDateString()
     return (
         <div>
             <p>Numéro de la réservation : { this.state.loanNumber }</p>

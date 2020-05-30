@@ -8,7 +8,7 @@ class GameCreation extends React.Component {
 
         super(props)
         this.state = {
-            gameToCreate: {name: '', availability: 'Available'}
+            gameToCreate: {availability: 'Available'}
         }
 
         this.createGame = this.createGame.bind(this)
@@ -34,6 +34,18 @@ class GameCreation extends React.Component {
             case 'availability':
                 newGame.availability = value
                 break;
+            case 'gameType':
+                newGame.gameType = value
+                break;
+            case 'editor':
+                newGame.editor = value
+                break;
+            case 'author':
+                newGame.author = value
+                break;
+            case 'description':
+                newGame.description = value
+                break;
             default:
                 
                 break;
@@ -52,36 +64,62 @@ class GameCreation extends React.Component {
         this.createGame()
     };
 
-  render () {
-    let newGame = this.state.gameToCreate
-    
-    return (
-      <form onSubmit= { this.formSubmitHandler }>
-        <p>Nom du jeu :</p>
-        <input
-            type= 'text'
-            name= 'name'
-            onChange= { this.formChangeHandler }
-        />
-
-        <br/> <br/>
-
-        <p>Disponibilité :</p>
-        <select value= { newGame.availability }
-                onChange= { this.formChangeHandler }
-                name= 'availability'>
-            <option value= 'Available'>Disponible</option>
-            <option value= 'InRepair'>En réparation</option>
-            <option value= 'Loaned'>Prêté</option>
-        </select>
-
-        <br/> <br/>
+    render () {
+        let newGame = this.state.gameToCreate
         
-        <input type= 'submit' />
-      </form>
-    )
-  };
- 
+        return (
+            <form onSubmit= { this.formSubmitHandler }>
+                <p>Nom du jeu :</p>
+                <input
+                    type= 'text'
+                    name= 'name'
+                    onChange= { this.formChangeHandler }
+                />
+                <br/>
+                <p>Type de jeu :</p>
+                <input
+                    type= 'text'
+                    name= 'gameType'
+                    onChange= { this.formChangeHandler }
+                />
+                <br/>
+                <p>Édité par :</p>
+                <input
+                    type= 'text'
+                    name= 'editor'
+                    onChange= { this.formChangeHandler }
+                />
+                <br/>
+                <p>Créé par :</p>
+                <input
+                    type= 'text'
+                    name= 'author'
+                    onChange= { this.formChangeHandler }
+                />
+                <br/>
+                <p>Description :</p>
+                <input
+                    type= 'text'
+                    name= 'description'
+                    onChange= { this.formChangeHandler }
+                />
+                <br/>
+
+                <p>Disponibilité :</p>
+                <select value= { newGame.availability }
+                        onChange= { this.formChangeHandler }
+                        name= 'availability'>
+                    <option value= 'Available'>Disponible</option>
+                    <option value= 'InRepair'>En réparation</option>
+                    <option value= 'Loaned'>Prêté</option>
+                </select>
+
+                <br/> <br/>
+                
+                <input type= 'submit' />
+            </form>
+        )
+    };
 };
 
 export default GameCreation;
