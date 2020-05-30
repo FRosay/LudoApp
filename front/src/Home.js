@@ -31,7 +31,7 @@ class Home extends Component {
                         </div>
                     </Tab>
                     <Tab eventKey='login' title='Login'>
-                        <Link className='nav-link' to={'/sign-in'}> Retour à la connexion</Link>
+                        <Link className='nav-link' to={'/login'}> Retour à la connexion</Link>
                     </Tab>
                 </Tabs>
             </div>

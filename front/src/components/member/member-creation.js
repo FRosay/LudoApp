@@ -50,7 +50,7 @@ class MemberCreation extends React.Component {
   render () {    
     return (
         <div>
-            <h2>Ajouter un.e adéhrent.e</h2>
+            <h2>Ajouter un.e adhérent.e</h2>
             <form onSubmit= { this.formSubmitHandler }>
                 <p>Prénom de l'adhérent.e :</p>
                 <input

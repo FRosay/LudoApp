@@ -23,7 +23,6 @@ class LoansList extends React.Component {
     return new Promise(() => {
       axios.get('http://localhost:5000/loans')
         .then((response) => {
-          console.log(response.data)
           this.setState({
             loans: response.data
           })

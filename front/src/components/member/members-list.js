@@ -23,7 +23,6 @@ class MembersList extends React.Component {
     return new Promise(() => {
       axios.get('http://localhost:5000/members')
         .then((response) => {
-          console.log(response.data)
           this.setState({
             members: response.data
           })
@@ -38,7 +37,7 @@ class MembersList extends React.Component {
   render () {
     return (
       <div>
-        <h1>Tous les membres :</h1>
+        <h1>Tous.tes les adhérent.e.s :</h1>
         <br/>
         {this.state.members.map((member, index) => {
           return <Member key= { index } memberId= { member._id } firstName= { member.firstName } lastName= { member.lastName }></Member>

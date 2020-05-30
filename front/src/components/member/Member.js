@@ -17,10 +17,10 @@ class Member extends React.Component {
 
   render () {
     return (
-        <div>
-            <p>Prénom(s) : { this.state.firstName }</p>
-            <p>Nom : { this.state.lastName }</p>
-        </div>
+      <div>
+          <p>Prénom(s) : { this.state.firstName }</p>
+          <p>Nom : { this.state.lastName }</p>
+      </div>
     )
   }
 }

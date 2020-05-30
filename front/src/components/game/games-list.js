@@ -23,7 +23,6 @@ class GamesList extends React.Component {
     return new Promise(() => {
       axios.get('http://localhost:5000/games')
         .then((response) => {
-          console.log(response.data)
           this.setState({
             games: response.data
           })
