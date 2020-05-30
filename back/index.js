@@ -1,6 +1,9 @@
 const MemberController = require("./member/member-controller.js");
 const GameController = require("./game/game-controller.js");
 const LoanController = require("./loan/loan-controller.js");
+const ContactController = require("./member/contact/contact-controller.js");
+const AdressController = require("./member/adress/adress-controller.js");
+const MembershipController = require("./member/membership/membership-controller.js");
 const mongoose = require('mongoose')
 const express = require('express');
 const morgan = require('morgan')
@@ -10,6 +13,9 @@ const PORT = 5000;
 const memberController = new MemberController()
 const gameController = new GameController()
 const loanController = new LoanController()
+const contactController = new ContactController()
+const adressController = new AdressController()
+const membershipController = new MembershipController()
 
 // Connection
 
@@ -91,6 +97,77 @@ api.delete('/member/delete/', async (req, res) => {
     }
 });
 
+// Contact
+
+api.get('/contacts', async (_, res) => {
+    const contacts = await contactController.getAll()
+    res.json(contacts);
+});
+
+api.post('/contact', async (req, res) => {
+    try {
+        await contactController.create(req.body.contact)
+        res.sendStatus(200);
+    } catch(e) {
+        res.send(e).status(500);
+    }
+});
+
+api.delete('/contact/delete/', async (req, res) => {
+    try {
+        await contactController.delete()
+    } catch(e) {
+        res.send(e).status(500)
+    }
+});
+
+// Adress
+
+api.get('/adress', async (_, res) => {
+    const adresss = await adressController.getAll()
+    res.json(adress);
+});
+
+api.post('/adress', async (req, res) => {
+    try {
+        await adressController.create(req.body.adress)
+        res.sendStatus(200);
+    } catch(e) {
+        res.send(e).status(500);
+    }
+});
+
+api.delete('/adress/delete/', async (req, res) => {
+    try {
+        await adressController.delete()
+    } catch(e) {
+        res.send(e).status(500)
+    }
+});
+
+// Membership
+
+api.get('/membership', async (_, res) => {
+    const membership = await membershipController.getAll()
+    res.json(membership);
+});
+
+api.post('/membership', async (req, res) => {
+    try {
+        await membershipController.create(req.body.membership)
+        res.sendStatus(200);
+    } catch(e) {
+        res.send(e).status(500);
+    }
+});
+
+api.delete('/membership/delete/', async (req, res) => {
+    try {
+        await membershipController.delete()
+    } catch(e) {
+        res.send(e).status(500)
+    }
+});
 
 // Loans
 

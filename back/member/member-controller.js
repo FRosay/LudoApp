@@ -1,6 +1,6 @@
 const Member = require('./member-model');
 
-module.exports = class GameController {
+module.exports = class MemberController {
 
 	async create(member) {
 		await Member.create({ firstName: member.firstName, lastName: member.lastName })
