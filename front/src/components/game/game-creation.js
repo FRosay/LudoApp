@@ -68,56 +68,59 @@ class GameCreation extends React.Component {
         let newGame = this.state.gameToCreate
         
         return (
-            <form onSubmit= { this.formSubmitHandler }>
-                <p>Nom du jeu :</p>
-                <input
-                    type= 'text'
-                    name= 'name'
-                    onChange= { this.formChangeHandler }
-                />
-                <br/>
-                <p>Type de jeu :</p>
-                <input
-                    type= 'text'
-                    name= 'gameType'
-                    onChange= { this.formChangeHandler }
-                />
-                <br/>
-                <p>Édité par :</p>
-                <input
-                    type= 'text'
-                    name= 'editor'
-                    onChange= { this.formChangeHandler }
-                />
-                <br/>
-                <p>Créé par :</p>
-                <input
-                    type= 'text'
-                    name= 'author'
-                    onChange= { this.formChangeHandler }
-                />
-                <br/>
-                <p>Description :</p>
-                <input
-                    type= 'text'
-                    name= 'description'
-                    onChange= { this.formChangeHandler }
-                />
-                <br/>
-
-                <p>Disponibilité :</p>
-                <select value= { newGame.availability }
+            <div>
+                <h2>Ajouter un jeu</h2>
+                <form onSubmit= { this.formSubmitHandler }>
+                    <p>Nom du jeu :</p>
+                    <input
+                        type= 'text'
+                        name= 'name'
                         onChange= { this.formChangeHandler }
-                        name= 'availability'>
-                    <option value= 'Available'>Disponible</option>
-                    <option value= 'InRepair'>En réparation</option>
-                    <option value= 'Loaned'>Prêté</option>
-                </select>
+                    />
+                    <br/>
+                    <p>Type de jeu :</p>
+                    <input
+                        type= 'text'
+                        name= 'gameType'
+                        onChange= { this.formChangeHandler }
+                    />
+                    <br/>
+                    <p>Édité par :</p>
+                    <input
+                        type= 'text'
+                        name= 'editor'
+                        onChange= { this.formChangeHandler }
+                    />
+                    <br/>
+                    <p>Créé par :</p>
+                    <input
+                        type= 'text'
+                        name= 'author'
+                        onChange= { this.formChangeHandler }
+                    />
+                    <br/>
+                    <p>Description :</p>
+                    <input
+                        type= 'text'
+                        name= 'description'
+                        onChange= { this.formChangeHandler }
+                    />
+                    <br/>
 
-                <br/> <br/>
-                
-                <input type= 'submit' />
-            </form>
+                    <p>Disponibilité :</p>
+                    <select value= { newGame.availability }
+                            onChange= { this.formChangeHandler }
+                            name= 'availability'>
+                        <option value= 'Available'>Disponible</option>
+                        <option value= 'InRepair'>En réparation</option>
+                        <option value= 'Loaned'>Prêté</option>
+                    </select>
+
+                    <br/> <br/>
+                    
+                    <input type= 'submit' />
+                </form>
+            </div>
         )
     };
 };

@@ -87,31 +87,34 @@ class LoanCreation extends React.Component {
 
   render () {
     return (
-        <form onSubmit= { this.formSubmitHandler }>
-            <p>Prêt numéro { this.state.loanToCreate.loanNumber !== null ? this.state.loanToCreate.loanNumber : '?' }</p>
-                    
-            <p>Dates du prêt :</p>
-            <DatePicker
-                name= 'startDate'
-                showPopperArrow= {false}
-                selected= { this.state.loanToCreate.startDate }
-                placeholderText= 'date de début'
-                onChange= { (date) => this.formDatesChangeHandler(date, 'start') }
-                dateFormat="dd/MM/yyyy"
-            />
-            <DatePicker
-                name= 'endDate'
-                showPopperArrow= { false }
-                selected= { this.state.loanToCreate.endDate }
-                placeholderText= 'date de fin'
-                onChange= { (date) => this.formDatesChangeHandler(date, 'end') }
-                dateFormat="dd/MM/yyyy"
-            />
+        <div>
+            <h2>Déclarer un prêt</h2>
+            <form onSubmit= { this.formSubmitHandler }>
+                <p>Prêt numéro { this.state.loanToCreate.loanNumber !== null ? this.state.loanToCreate.loanNumber : '?' }</p>
+                        
+                <p>Dates du prêt :</p>
+                <DatePicker
+                    name= 'startDate'
+                    showPopperArrow= {false}
+                    selected= { this.state.loanToCreate.startDate }
+                    placeholderText= 'date de début'
+                    onChange= { (date) => this.formDatesChangeHandler(date, 'start') }
+                    dateFormat="dd/MM/yyyy"
+                />
+                <DatePicker
+                    name= 'endDate'
+                    showPopperArrow= { false }
+                    selected= { this.state.loanToCreate.endDate }
+                    placeholderText= 'date de fin'
+                    onChange= { (date) => this.formDatesChangeHandler(date, 'end') }
+                    dateFormat="dd/MM/yyyy"
+                />
 
-            <br/> <br/>
-            
-            <input type= 'submit' />
-        </form>
+                <br/> <br/>
+                
+                <input type= 'submit' />
+            </form>
+        </div>
     )
   };
  

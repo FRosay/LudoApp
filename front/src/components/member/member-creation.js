@@ -49,25 +49,28 @@ class MemberCreation extends React.Component {
 
   render () {    
     return (
-      <form onSubmit= { this.formSubmitHandler }>
-        <p>Prénom de l'adhérent.e :</p>
-        <input
-            type= 'text'
-            name= 'firstName'
-            onChange= { this.formChangeHandler }
-        />
-        <br/>
-        <p>Nom de l'adhérent.e :</p>
-        <input
-            type= 'text'
-            name= 'lastName'
-            onChange= { this.formChangeHandler }
-        />
+        <div>
+            <h2>Ajouter un.e adéhrent.e</h2>
+            <form onSubmit= { this.formSubmitHandler }>
+                <p>Prénom de l'adhérent.e :</p>
+                <input
+                    type= 'text'
+                    name= 'firstName'
+                    onChange= { this.formChangeHandler }
+                />
+                <br/>
+                <p>Nom de l'adhérent.e :</p>
+                <input
+                    type= 'text'
+                    name= 'lastName'
+                    onChange= { this.formChangeHandler }
+                />
 
-        <br/> <br/>
-        
-        <input type= 'submit' />
-      </form>
+                <br/> <br/>
+                
+                <input type= 'submit' />
+            </form>
+        </div>
     )
   };
  
