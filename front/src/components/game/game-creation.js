@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { Form, FormGroup, FormLabel, Col, Button } from 'react-bootstrap'
 
 
 class GameCreation extends React.Component {
@@ -8,12 +11,33 @@ class GameCreation extends React.Component {
 
         super(props)
         this.state = {
-            gameToCreate: {availability: 'Available'}
+            gameToCreate: { availability: 'Available' }
         }
 
         this.createGame = this.createGame.bind(this)
-        this.formChangeHandler = this.formChangeHandler.bind(this)
         this.formSubmitHandler = this.formSubmitHandler.bind(this)
+    
+        // eslint-disable-next-line
+        const GAMECREATIONSCHEMA = Yup.object().shape({
+            name: Yup.string()
+                .max(40, 'Trop long')
+                .required('Requis'),
+            availability: Yup.string()
+                .max(40, 'Trop long')
+                .required('Requis'),
+            gameType: Yup.string()
+                .max(40, 'Trop long')
+                .required('Requis'),
+            editor: Yup.string()
+                .max(40, 'Trop long')
+                .required('Requis'),
+            author: Yup.string()
+                .max(40, 'Trop long')    
+                .required('Requis'),
+            description: Yup.string()
+                .max(40, 'Trop long')    
+                .required('Requis'),
+          });
     }
 
     createGame() {
@@ -22,104 +46,88 @@ class GameCreation extends React.Component {
         }).then(() => alert('Jeu ajouté : ' + this.state.gameToCreate.name + '.'))
     };
 
-    formChangeHandler(e) {
-        let name = e.target.name;
-        let value = e.target.value;
-        let newGame = this.state.gameToCreate;
+    formSubmitHandler(values) {
+        
+        let newGame = this.state.gameToCreate
+        newGame.name = values.name
+        newGame.gameType = values.gameType
+        newGame.availability = values.availability
+        newGame.author = values.author
+        newGame.editor = values.editor
+        newGame.description = values.description
 
-        switch (name) {
-            case 'name':
-                newGame.name = value
-                break;
-            case 'availability':
-                newGame.availability = value
-                break;
-            case 'gameType':
-                newGame.gameType = value
-                break;
-            case 'editor':
-                newGame.editor = value
-                break;
-            case 'author':
-                newGame.author = value
-                break;
-            case 'description':
-                newGame.description = value
-                break;
-            default:
-                
-                break;
-        }
-
-        this.setState({ gameToCreate: newGame });
-    };
-
-    formSubmitHandler(e) {
-        e.preventDefault();
-        if (this.state.gameToCreate.availability === undefined) {
-            let newGame = this.state.gameToCreate;
-            newGame.availability = 'Available'
-            this.setState({ gameToCreate: newGame });
-        }
         this.createGame()
     };
 
-    render () {
-        let newGame = this.state.gameToCreate
-        
+    render () {        
         return (
             <div>
                 <h2>Ajouter un jeu</h2>
-                <form onSubmit= { this.formSubmitHandler }>
-                    <p>Nom du jeu :</p>
-                    <input
-                        type= 'text'
-                        name= 'name'
-                        onChange= { this.formChangeHandler }
-                    />
-                    <br/>
-                    <p>Type de jeu :</p>
-                    <input
-                        type= 'text'
-                        name= 'gameType'
-                        onChange= { this.formChangeHandler }
-                    />
-                    <br/>
-                    <p>Édité par :</p>
-                    <input
-                        type= 'text'
-                        name= 'editor'
-                        onChange= { this.formChangeHandler }
-                    />
-                    <br/>
-                    <p>Créé par :</p>
-                    <input
-                        type= 'text'
-                        name= 'author'
-                        onChange= { this.formChangeHandler }
-                    />
-                    <br/>
-                    <p>Description :</p>
-                    <input
-                        type= 'text'
-                        name= 'description'
-                        onChange= { this.formChangeHandler }
-                    />
-                    <br/>
 
-                    <p>Disponibilité :</p>
-                    <select value= { newGame.availability }
-                            onChange= { this.formChangeHandler }
-                            name= 'availability'>
-                        <option value= 'Available'>Disponible</option>
-                        <option value= 'InRepair'>En réparation</option>
-                        <option value= 'Loaned'>Prêté</option>
-                    </select>
+                <Formik initialValues=  {{ name: '',
+                                        availability: this.state.gameToCreate.availability,
+                                        gameType: '',
+                                        editor: '',
+                                        author: '',
+                                        description: '', }}
+                        validationSchema= { this.GAMECREATIONSCHEMA }
+                        onSubmit= { values => { this.formSubmitHandler(values) }}
+                >
+                {({ handleSubmit, handleChange, handleBlur,
+                    values, touched, isValid, errors, 
+                }) => (
+                    <Form noValidate onSubmit= { handleSubmit }>
+                        <Form.Row>
+                            <FormGroup as= { Col } md='6' controlId= 'validationFormik01'>
+                                <FormLabel>Nom du jeu : </FormLabel>
+                                <Form.Control type= 'text' name= 'name' value= { values.name } onChange= { handleChange } 
+                                              isValid= { touched.lastName && !errors.lastName }/>
+                            </FormGroup>
 
-                    <br/> <br/>
-                    
-                    <input type= 'submit' />
-                </form>
+                            <FormGroup as= { Col } md='6' controlId= 'validationFormik02'>
+                                <FormLabel>Type de jeu : </FormLabel>
+                                <Form.Control type= 'text' name= 'gameType' value= { values.gameType } onChange= { handleChange } 
+                                              isValid= { touched.lastName && !errors.lastName }>
+                                </Form.Control>
+                            </FormGroup>
+                        </Form.Row>
+
+                        <FormGroup as= { Col } md='6' controlId= 'validationFormik03'>
+                            <FormLabel>Disponibilité : </FormLabel>
+                            <Form.Control as= 'select' name= 'availability' value= { values.availability } onChange= { handleChange } 
+                                          isValid= { touched.lastName && !errors.lastName }>
+                                <option value= 'Available'>Disponible</option>
+                                <option value= 'InRepair'>En réparation</option>
+                                <option value= 'Loaned'>Prêté</option>
+                            </Form.Control>
+                        </FormGroup>
+
+                        <Form.Row>
+                            <FormGroup as= { Col } md='6' controlId= 'validationFormik04'>
+                                <FormLabel>Créé par : </FormLabel>
+                                <Form.Control type= 'text' name= 'author' value= { values.author } onChange= { handleChange } 
+                                                isValid= { touched.lastName && !errors.lastName }>
+                                </Form.Control>
+                            </FormGroup>
+                            <FormGroup as= { Col } md='6' controlId= 'validationFormik05'>
+                                <FormLabel>Édité par : </FormLabel>
+                                <Form.Control type= 'text' name= 'editor' value= { values.editor } onChange= { handleChange } 
+                                                isValid= { touched.lastName && !errors.lastName }>
+                                </Form.Control>
+                            </FormGroup>
+                        </Form.Row>
+
+                        <FormGroup as= { Col } md='6' controlId= 'validationFormik06'>
+                            <FormLabel>Description : </FormLabel>
+                            <Form.Control as= 'textarea' rows= '3' name= 'description' value= { values.description } onChange= { handleChange } 
+                                            isValid= { touched.lastName && !errors.lastName }>
+                            </Form.Control>
+                        </FormGroup>
+
+                        <Button variant="primary" type='submit'>Créer</Button>
+                    </Form>
+                )}        
+                </Formik>
             </div>
         )
     };

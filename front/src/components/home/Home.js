@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TabContainer, TabPane, TabContent, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion'
 
 import GamesList from '../game/games-list';
 import GameCreation from '../game/game-creation';
@@ -8,7 +9,9 @@ import MembersList from '../member/members-list';
 import MemberCreation from '../member/member-creation';
 import LoansList from '../loan/loans-list';
 import LoanCreation from '../loan/loan-creation';
-import { motion } from 'framer-motion'
+
+import './Home.css'
+
 
 const tabAnimation = {
     in: {
@@ -18,7 +21,8 @@ const tabAnimation = {
         opacity: 0 
     },
     hover: {
-        scale: 1.06
+        y: -5
+        //scale: 1.06
     }
 }
 
@@ -26,7 +30,7 @@ class Home extends Component {
     render() {
         return (
             <TabContainer defaultActiveKey='members' id='main-tab'>
-                <Nav variant="pills" className="flex-row">
+                <Nav variant="tabs" className="flex-row">
                     <Nav.Item>
                         <motion.div className= 'App' initial= 'out' animate= 'in'
                                     exit= 'out' whileHover= 'hover' variants= { tabAnimation }>
