@@ -18,7 +18,6 @@ class LoanCreation extends React.Component {
         }
 
         this.createLoan = this.createLoan.bind(this)
-        this.formChangeHandler = this.formChangeHandler.bind(this)
         this.formSubmitHandler = this.formSubmitHandler.bind(this)
         this.formDatesChangeHandler = this.formDatesChangeHandler.bind(this)
         this.setLoanNumber = this.setLoanNumber.bind(this)
@@ -66,26 +65,6 @@ class LoanCreation extends React.Component {
         this.setState({ loanToCreate: newLoan });
     }
 
-    formChangeHandler(e) {
-        let name = e.target.name;
-        let value = e.target.value;
-        let newLoan = this.state.loanToCreate;
-
-        switch (name) {
-            case 'firstName':
-                newLoan.firstName = value
-                break;
-            case 'lastName':
-                newLoan.lastName = value
-                break;
-            default:
-                
-                break;
-        }
-
-        this.setState({ loanToCreate: newLoan });
-    };
-
     formSubmitHandler(values) {
         let newLoan = this.state.loanToCreate
         newLoan.startDate = values.startDate
@@ -98,45 +77,45 @@ class LoanCreation extends React.Component {
         this.createLoan()
     };
 
-  render () {
-    return (
-        <div>
-            <h2>Enregistrer un prêt</h2>
-            <br />
-            <p>Prêt numéro { this.state.loanToCreate.loanNumber !== null ? this.state.loanToCreate.loanNumber : '?' }</p>
-            <Formik initialValues=  {{  startDate: new Date(),
-                                        endDate: new Date(),
-                                    }}
-                    validationSchema= { this.loanCreationSchema }
-                    onSubmit= { values => { this.formSubmitHandler(values) }}
-                >
-                {({ handleSubmit, setFieldValue,
-                    values, touched, isValid, errors, 
-                }) => (
-                    <Form noValidate onSubmit= { handleSubmit }>
-                        <Form.Row>
-                            <FormGroup as= { Col } md='8' controlId= 'validationFormik01'>
-                                <FormLabel>Date de début : </FormLabel>
-                                <Form.Control as= { DatePicker } name= 'startDate' selected= { values.startDate } dateFormat='dd/MM/yyyy' value= { values.startDate } 
-                                              onChange= { (date) => setFieldValue('startDate', date, true) } isValid= { touched.startDate && !errors.startDate } placeholderText= '01/01/2020'/>
-                            </FormGroup>
+    render () {
+        return (
+            <div>
+                <h2>Enregistrer un prêt</h2>
+                <br />
+                <p>Prêt numéro { this.state.loanToCreate.loanNumber !== null ? this.state.loanToCreate.loanNumber : '?' }</p>
+                <Formik initialValues=  {{  startDate: new Date(),
+                                            endDate: new Date(),
+                                        }}
+                        validationSchema= { this.loanCreationSchema }
+                        onSubmit= { async (values, { resetForm }) => { await this.formSubmitHandler(values)
+                                                                                  resetForm() }}
+                    >
+                    {({ handleSubmit, setFieldValue,
+                        values, touched, isValid, errors, 
+                    }) => (
+                        <Form noValidate onSubmit= { handleSubmit }>
+                            <Form.Row>
+                                <FormGroup as= { Col } md='8' controlId= 'validationFormik01'>
+                                    <FormLabel>Date de début : </FormLabel>
+                                    <Form.Control as= { DatePicker } name= 'startDate' selected= { values.startDate } dateFormat='dd/MM/yyyy' value= { values.startDate } 
+                                                onChange= { (date) => setFieldValue('startDate', date, true) } isValid= { touched.startDate && !errors.startDate } placeholderText= '01/01/2020'/>
+                                </FormGroup>
 
-                            <FormGroup as= { Col } md='8' controlId= 'validationFormik02'>
-                                <FormLabel>Date de fin : </FormLabel>
-                                <Form.Control as= { DatePicker } name= 'endDate' selected= { values.endDate } dateFormat='dd/MM/yyyy' value= { values.endDate } 
-                                              onChange= { (date) => setFieldValue('endDate', date, true) } isValid= { touched.endDate && !errors.endDate } placeholderText= '01/01/2020'>
-                                </Form.Control>
-                            </FormGroup>
-                        </Form.Row>
+                                <FormGroup as= { Col } md='8' controlId= 'validationFormik02'>
+                                    <FormLabel>Date de fin : </FormLabel>
+                                    <Form.Control as= { DatePicker } name= 'endDate' selected= { values.endDate } dateFormat='dd/MM/yyyy' value= { values.endDate } 
+                                                onChange= { (date) => setFieldValue('endDate', date, true) } isValid= { touched.endDate && !errors.endDate } placeholderText= '01/01/2020'>
+                                    </Form.Control>
+                                </FormGroup>
+                            </Form.Row>
 
-                        <Button variant="primary" type='submit'>Créer</Button>
-                    </Form>
-                )}        
-            </Formik>
-        </div>
-    )
-  };
- 
+                            <Button variant="primary" type='submit'>Créer</Button>
+                        </Form>
+                    )}        
+                </Formik>
+            </div>
+        )
+    }; 
 };
 
 export default LoanCreation;

@@ -80,6 +80,11 @@ api.get('/members', async (_, res) => {
     res.json(members);
 });
 
+api.get('/member/getlastnumber', async (_, res) => {
+    const lastMember = await memberController.getLast()
+    res.json(lastMember);
+});
+
 api.post('/member', async (req, res) => {
     try {
         await memberController.create(req.body.member)

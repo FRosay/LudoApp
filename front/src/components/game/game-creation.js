@@ -71,7 +71,8 @@ class GameCreation extends React.Component {
                                         author: '',
                                         description: '', }}
                         validationSchema= { this.GAMECREATIONSCHEMA }
-                        onSubmit= { values => { this.formSubmitHandler(values) }}
+                        onSubmit= { async (values, { resetForm }) => { await this.formSubmitHandler(values)
+                                                                                              resetForm() }}
                 >
                 {({ handleSubmit, handleChange, handleBlur,
                     values, touched, isValid, errors, 

@@ -22,7 +22,7 @@ class MemberCreation extends React.Component {
 
         super(props)
         this.state = {
-            memberToCreate: {memberNumber: 0, firstName: '', lastName: ''}
+            memberToCreate: {memberNumber: 1, firstName: '', lastName: ''}
         }
 
         this.createMember = this.createMember.bind(this)
@@ -32,8 +32,20 @@ class MemberCreation extends React.Component {
     createMember() {
         axios.post('http://localhost:5000/member', {
             member: this.state.memberToCreate
-        }).then(() => alert('Membre ajouté : ' + this.state.memberToCreate.firstName + ' ' + this.state.memberToCreate.lastName + '.'))
+        }).then(() => { this.setMemberNumber() })
+          .then(() => alert('Membre ajouté : ' + this.state.memberToCreate.firstName + ' ' + this.state.memberToCreate.lastName + '.'))
     };
+
+    setMemberNumber() {
+        axios.get('http://localhost:5000/member/getlastnumber').then((response) => {
+            if (response.data !== null && response.data.memberNumber !== undefined) {
+                let newMember = this.state.memberToCreate
+                newMember.memberNumber = response.data.memberNumber + 1
+
+                this.setState({ memberToCreate: newMember })
+            }
+        })
+    }
 
     formSubmitHandler(values) {
         let newMember = this.state.memberToCreate
@@ -50,13 +62,14 @@ class MemberCreation extends React.Component {
         <div>
             <h2>Ajouter un.e adhérent.e</h2>
             <br />
-            <p>Numéro d'adhérent.e : { this.state.memberToCreate.memberNumber }</p>
+            <p>Numéro d'adhérent.e : { this.state.memberToCreate.memberNumber !== null ? this.state.memberToCreate.memberNumber : '?' }</p>
             <Formik initialValues=  {{  firstName: '',
                                         lastName: '' }}
                     validateOnBlur= { false }
                     validateOnChange= { false }
                     validationSchema= { GAMECREATIONSCHEMA }
-                    onSubmit= { values => { this.formSubmitHandler(values) }}
+                    onSubmit= { async (values, { resetForm }) => { await this.formSubmitHandler(values)
+                                                                              resetForm() }}
             >
                 {({ handleSubmit, handleChange, handleBlur, values 
                 }) => (
