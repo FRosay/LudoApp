@@ -37,7 +37,7 @@ class MembersList extends React.Component {
   render () {
     return (
       <div>
-        <h1>Tous.tes les adhérent.e.s :</h1>
+        <h2>Liste des adhérent.e.s :</h2>
         <br/>
         {this.state.members.map((member, index) => {
           return <Member key= { index } memberId= { member._id } firstName= { member.firstName } lastName= { member.lastName }></Member>

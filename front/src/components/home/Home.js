@@ -14,16 +14,9 @@ import './Home.css'
 
 
 const tabAnimation = {
-    in: {
-        opacity: 1.5
-    },
-    out: {
-        opacity: 0 
-    },
-    hover: {
-        y: -5
-        //scale: 1.06
-    }
+    in: { opacity: 1.5 },
+    out: { opacity: 0 },
+    hover: { y: -5 }
 }
 
 class Home extends Component {

@@ -37,7 +37,7 @@ class GamesList extends React.Component {
   render () {
     return (
       <div>
-        <h1>Tous les jeux :</h1>
+        <h2>Tous les jeux :</h2>
         <br/>
         {this.state.games.map((game, index) => {
           return <Game key= { index } gameId= { game._id } name= { game.name } availability= { game.availability }

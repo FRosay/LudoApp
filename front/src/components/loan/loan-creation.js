@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
+
 import DatePicker from 'react-datepicker';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import { Form, FormGroup, FormLabel, Col, Button } from 'react-bootstrap'
 
 
 class LoanCreation extends React.Component {
@@ -20,9 +24,18 @@ class LoanCreation extends React.Component {
         this.setLoanNumber = this.setLoanNumber.bind(this)
 
         this.setLoanNumber()
+
+        // eslint-disable-next-line
+        let loanCreationSchema = yup.object().shape({
+            startDate: yup.date().default(function () {return new Date()})
+                .max(yup.ref('endDate'), 'La date de début ne peut être après la date de fin')
+                .required('Requis'),
+            endDate: yup.date().default(function () {return new Date()})
+                .min(yup.ref('startDate'), 'La date de fin ne peut être avant la date de début')
+                .required('Requis'),
+        });
     }
-
-
+    
     setLoanNumber() {
         axios.get('http://localhost:5000/loan/getlast').then((response) => {
             if (response.data !== null && response.data.loanNumber !== undefined) {
@@ -73,15 +86,15 @@ class LoanCreation extends React.Component {
         this.setState({ loanToCreate: newLoan });
     };
 
-    formSubmitHandler(e) {
-        e.preventDefault();
-        if (this.state.loanToCreate.startDate > this.state.loanToCreate.endDate) {
-            alert('La date de début ne peut être après la date de fin.')
-            return
-        } else if (this.state.loanToCreate.memberId === undefined || this.state.loanToCreate.gameId === undefined) {
-            alert('Il faut spécifier un jeu et une personne à qui le prêter.')
-            return
-        }
+    formSubmitHandler(values) {
+        let newLoan = this.state.loanToCreate
+        newLoan.startDate = values.startDate
+        newLoan.endDate = values.endDate
+        
+        this.setState({
+            loanToCreate: newLoan
+        })
+
         this.createLoan()
     };
 
@@ -89,31 +102,36 @@ class LoanCreation extends React.Component {
     return (
         <div>
             <h2>Déclarer un prêt</h2>
-            <form onSubmit= { this.formSubmitHandler }>
-                <p>Prêt numéro { this.state.loanToCreate.loanNumber !== null ? this.state.loanToCreate.loanNumber : '?' }</p>
-                        
-                <p>Dates du prêt :</p>
-                <DatePicker
-                    name= 'startDate'
-                    showPopperArrow= {false}
-                    selected= { this.state.loanToCreate.startDate }
-                    placeholderText= 'date de début'
-                    onChange= { (date) => this.formDatesChangeHandler(date, 'start') }
-                    dateFormat="dd/MM/yyyy"
-                />
-                <DatePicker
-                    name= 'endDate'
-                    showPopperArrow= { false }
-                    selected= { this.state.loanToCreate.endDate }
-                    placeholderText= 'date de fin'
-                    onChange= { (date) => this.formDatesChangeHandler(date, 'end') }
-                    dateFormat="dd/MM/yyyy"
-                />
+            <p>Prêt numéro { this.state.loanToCreate.loanNumber !== null ? this.state.loanToCreate.loanNumber : '?' }</p>
+            <Formik initialValues=  {{  startDate: new Date(),
+                                        endDate: new Date(),
+                                    }}
+                    validationSchema= { this.loanCreationSchema }
+                    onSubmit= { values => { this.formSubmitHandler(values) }}
+                >
+                {({ handleSubmit, setFieldValue,
+                    values, touched, isValid, errors, 
+                }) => (
+                    <Form noValidate onSubmit= { handleSubmit }>
+                        <Form.Row>
+                            <FormGroup as= { Col } md='6' controlId= 'validationFormik01'>
+                                <FormLabel>Date de début : </FormLabel>
+                                <Form.Control as= { DatePicker } name= 'startDate' selected= { values.startDate } dateFormat='dd/MM/yyyy' value= { values.startDate } 
+                                              onChange= { (date) => setFieldValue('startDate', date, true) } isValid= { touched.startDate && !errors.startDate } placeholderText= '01/01/2020'/>
+                            </FormGroup>
 
-                <br/> <br/>
-                
-                <input type= 'submit' />
-            </form>
+                            <FormGroup as= { Col } md='6' controlId= 'validationFormik02'>
+                                <FormLabel>Date de fin : </FormLabel>
+                                <Form.Control as= { DatePicker } name= 'endDate' selected= { values.endDate } dateFormat='dd/MM/yyyy' value= { values.endDate } 
+                                              onChange= { (date) => setFieldValue('endDate', date, true) } isValid= { touched.endDate && !errors.endDate } placeholderText= '01/01/2020'>
+                                </Form.Control>
+                            </FormGroup>
+                        </Form.Row>
+
+                        <Button variant="primary" type='submit'>Créer</Button>
+                    </Form>
+                )}        
+            </Formik>
         </div>
     )
   };

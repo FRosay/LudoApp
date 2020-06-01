@@ -37,7 +37,7 @@ class GameCreation extends React.Component {
             description: Yup.string()
                 .max(40, 'Trop long')    
                 .required('Requis'),
-          });
+        });
     }
 
     createGame() {
@@ -117,7 +117,7 @@ class GameCreation extends React.Component {
                             </FormGroup>
                         </Form.Row>
 
-                        <FormGroup as= { Col } md='6' controlId= 'validationFormik06'>
+                        <FormGroup as= { Col } md='14' controlId= 'validationFormik06'>
                             <FormLabel>Description : </FormLabel>
                             <Form.Control as= 'textarea' rows= '3' name= 'description' value= { values.description } onChange= { handleChange } 
                                             isValid= { touched.lastName && !errors.lastName }>

@@ -37,7 +37,7 @@ class LoansList extends React.Component {
   render () {
     return (
       <div>
-        <h1>Tous les prêts :</h1>
+        <h2>Tous les prêts :</h2>
         <br/>
         {this.state.loans.map((loan, index) => {
           return <Loan  key= { index } loanId= { loan._id } loanNumber= { loan.loanNumber } 

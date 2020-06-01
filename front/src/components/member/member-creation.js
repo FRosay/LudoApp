@@ -1,6 +1,32 @@
 import React from 'react';
 import axios from 'axios';
 
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { Form, FormGroup, FormLabel, Col, Button } from 'react-bootstrap'
+
+
+
+const GAMECREATIONSCHEMA = Yup.object().shape({
+    name: Yup.string()
+        .max(40, 'Trop long')
+        .required('Requis'),
+    availability: Yup.string()
+        .max(40, 'Trop long')
+        .required('Requis'),
+    gameType: Yup.string()
+        .max(40, 'Trop long')
+        .required('Requis'),
+    editor: Yup.string()
+        .max(40, 'Trop long')
+        .required('Requis'),
+    author: Yup.string()
+        .max(40, 'Trop long')    
+        .required('Requis'),
+    description: Yup.string()
+        .max(40, 'Trop long')    
+        .required('Requis'),
+});
 
 class MemberCreation extends React.Component {
 
@@ -8,12 +34,11 @@ class MemberCreation extends React.Component {
 
         super(props)
         this.state = {
-            memberToCreate: {firstName: '', lastName: ''}
+            memberToCreate: {memberNumber: 0, firstName: '', lastName: ''}
         }
 
         this.createMember = this.createMember.bind(this)
-        this.formChangeHandler = this.formChangeHandler.bind(this)
-        this.formSubmitHandler = this.formSubmitHandler.bind(this)
+        this.formSubmitHandler = this.formSubmitHandler.bind(this)        
     }
 
     createMember() {
@@ -22,28 +47,13 @@ class MemberCreation extends React.Component {
         }).then(() => alert('Membre ajouté : ' + this.state.memberToCreate.firstName + ' ' + this.state.memberToCreate.lastName + '.'))
     };
 
-    formChangeHandler(e) {
-        let name = e.target.name;
-        let value = e.target.value;
-        let newMember = this.state.memberToCreate;
+    formSubmitHandler(values) {
+        let newMember = this.state.memberToCreate
+        newMember.firstName = values.firstName
+        newMember.lastName = values.lastName
 
-        switch (name) {
-            case 'firstName':
-                newMember.firstName = value
-                break;
-            case 'lastName':
-                newMember.lastName = value
-                break;
-            default:
-                
-                break;
-        }
+        this.setState({ memberToCreate: newMember })
 
-        this.setState({ memberToCreate: newMember });
-    };
-
-    formSubmitHandler(e) {
-        e.preventDefault();
         this.createMember()
     };
 
@@ -51,25 +61,41 @@ class MemberCreation extends React.Component {
     return (
         <div>
             <h2>Ajouter un.e adhérent.e</h2>
-            <form onSubmit= { this.formSubmitHandler }>
-                <p>Prénom de l'adhérent.e :</p>
-                <input
-                    type= 'text'
-                    name= 'firstName'
-                    onChange= { this.formChangeHandler }
-                />
-                <br/>
-                <p>Nom de l'adhérent.e :</p>
-                <input
-                    type= 'text'
-                    name= 'lastName'
-                    onChange= { this.formChangeHandler }
-                />
+            <p>Numéro d'adhérent.e : { this.state.memberToCreate.memberNumber }</p>
+            <Formik initialValues=  {{  firstName: '',
+                                        lastName: '',
+                                        subscriberTypes: '',
+                                        editor: '',
+                                        author: '',
+                                        description: '', }}
+                    validateOnBlur= { false }
+                    validateOnChange= { false }
+                    validationSchema= { GAMECREATIONSCHEMA }
+                    onSubmit= { values => { this.formSubmitHandler(values) }}
+            >
+                {({ handleSubmit, handleChange, handleBlur,
+                    values, touched, isValid, errors, 
+                }) => (
+                    <Form noValidate onSubmit= { handleSubmit }>
+                        <Form.Row>
+                            <FormGroup as= { Col } md='6' controlId= 'validationFormik01'>
+                                <FormLabel>Nom : </FormLabel>
+                                <Form.Control type= 'text' name= 'lastName' value= { values.lastName } onChange= { handleChange } 
+                                              onBlur= { handleBlur } isValid= { touched.lastName && !errors.lastName }/>
+                            </FormGroup>
 
-                <br/> <br/>
-                
-                <input type= 'submit' />
-            </form>
+                            <FormGroup as= { Col } md='6' controlId= 'validationFormik02'>
+                                <FormLabel>Prénom : </FormLabel>
+                                <Form.Control type= 'text' name= 'firstName' value= { values.firstName } onChange= { handleChange } 
+                                              onBlur= { handleBlur } isValid= { touched.firstName && !errors.firstName }>
+                                </Form.Control>
+                            </FormGroup>
+                        </Form.Row>
+
+                        <Button variant="primary" type='submit'>Créer</Button>
+                    </Form>
+                )}        
+            </Formik>
         </div>
     )
   };

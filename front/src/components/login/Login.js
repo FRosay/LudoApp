@@ -1,7 +1,26 @@
-import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { motion } from 'framer-motion'
 
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { Form, FormGroup, FormLabel, Col, Button } from 'react-bootstrap'
+
+
+const formErrorTextAnimation = {
+    open: { opacity: [0, 0,5, 1] },
+    closed: { opacity: [1, 0.5, 0] },
+    transition: { duration: 1.2 }
+}
+
+const loginSchema = Yup.object().shape({
+    username: Yup.string()
+        .min(3, "Nom d'utilisateur trop court")
+        .max(20, "Nom d'utilisateur trop long.")
+        .required("Nom d'utilisateur requis."),
+    password: Yup.string()
+        .required('Mot de passe requis.'),
+});
 
 class Login extends Component {
 
@@ -9,41 +28,18 @@ class Login extends Component {
 
         super(props)
         this.state = {
-            username: null,
-            password: null,
             redirect: null
         }
 
-        this.formSubmitHandler = this.formSubmitHandler.bind(this)
-        this.formChangeHandler = this.formChangeHandler.bind(this)
+        this.login = this.login.bind(this)              
     }
 
-
-    formChangeHandler(e) {
-        let name = e.target.name;
-        let value = e.target.value;
-
-        switch (name) {
-            case 'username':
-                this.setState({ username: value });
-                break;
-            case 'password':
-                this.setState({ password: value });
-                break;
-            default:
-                
-                break;
-        }
-    };
-
-    formSubmitHandler(e) {
-        e.preventDefault();
-        if (this.state.username === 'test' && this.state.password === 'test') {
+    login(values) {
+        if (values.username === 'test' && values.password === 'test') {
             this.setState({
                 redirect: '/home'
             })
         }
-
     }
 
     render() {
@@ -51,43 +47,68 @@ class Login extends Component {
             return <Redirect to= {this.state.redirect} />
         }
         return (
-            <motion.div
-                className="auth-wrapper"
-                initial= {{ ocacity: 0 }}
-                animate= {{ opacity: 1 }}
-                exit= {{ opacity: 0}}>
-                <div className="auth-inner">
-                    <form onSubmit= { this.formSubmitHandler }>
+            <div className='auth-wrapper'>
+                <nav className='navbar navbar-expand-lg navbar-light fixed-top'>
+                    <div className='container'>
+                        <div className='collapse navbar-collapse' id='navbarTogglerDemo02'>
+                            <ul className='navbar-nav ml-auto'>
+                                <li className='nav-item'>
+                                    <Link className= 'nav-link' to= { '/home' }>Voir le site</Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <motion.div animate= {{ y: [-400, -180, 50, -70, 25, -35, 12, -17, 0] }} transition= {{ duration: 0.9 }} >
+                    <div className='auth-inner' >
+                        <h1>Ludogiciel</h1>
+                    </div>
+                    
+                    <div className='auth-inner'>
                         <h3>Connexion</h3>
-                        
-                        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-                            <div className="container">
-                                <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-                                    <ul className="navbar-nav ml-auto">
-                                        <li className="nav-item">
-                                            <Link className="nav-link" to={"/home"}>Voir le site</Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </nav>
-                        <div className="form-group">
-                            <label>Nom d'utilisateur</label>
-                            <input  type="username" name= 'username' className="form-control" 
-                                    placeholder="Entrez votre nom d'utilisateur" onChange= { this.formChangeHandler } />
-                        </div>
+                        <Formik
+                            initialValues= {{ username: '', password: '' }}
+                            validationSchema= { loginSchema }
+                            validateOnBlur= { false }
+                            validateOnChange= { false }
+                            onSubmit= {(values, { setSubmitting }) => {
+                                setSubmitting(true)
+                                this.login(values)
+                                setSubmitting(false)
+                            }}
+                        >
+                            {({ values, errors, isSubmitting,
+                                handleChange, handleBlur, handleSubmit,
+                            }) => (
+                                <Form onSubmit= { handleSubmit }>
 
-                        <div className="form-group">
-                            <label>Mot de passe</label>
-                            <input  type="password" name= 'password' className="form-control" 
-                                    placeholder="Entrez votre mot de passe" onChange= { this.formChangeHandler } />
-                        </div>
-                        <br />
-                        <button type="submit" className="btn btn-primary btn-block">Se connecter</button>
-                        <p className="forgot-password text-right">Mot de passe oublié ?</p>
-                    </form>
-                </div>
-            </motion.div>
+                                    <FormGroup as= { Col } controlId= 'validationFormik01'>
+                                        <FormLabel>Nom d'utilisateur</FormLabel>
+                                        <Form.Control type= 'text' name= 'username' value= { values.username } onChange= { handleChange } 
+                                                    onBlur= { handleBlur } placeholder= 'Exemple : FRosay'/>
+                                        <motion.div animate= { errors.username ? 'open' : 'closed' } transition= { 'transition' } variants= { formErrorTextAnimation } > 
+                                            <p className='form-error-text'>{ errors.username }</p>
+                                        </motion.div> 
+                                    </FormGroup>
+
+                                    <FormGroup as= { Col } controlId= 'validationFormik02'>
+                                        <FormLabel>Mot de passe</FormLabel>
+                                        <Form.Control type= 'password' name= 'password' value= { values.password } onChange= { handleChange }
+                                                    onBlur= { handleBlur } placeholder= 'Exemple : Ch4u$$ette !'/>
+                                        <motion.div animate= { errors.password ? 'open' : 'closed' } transition= {{ duration: 1 }} variants= { formErrorTextAnimation }>
+                                            <p className='form-error-text'>{ errors.password }</p>
+                                        </motion.div> 
+                                    </FormGroup>
+                                    <br />
+                                    <Button type= 'submit' className='btn btn-primary btn-block' disabled= { isSubmitting }>Se connecter</Button>
+                                    <p className='forgot-password text-right'>Mot de passe oublié ?</p>
+
+                                </Form>
+                            )}
+                        </Formik>
+                    </div>
+                </motion.div>
+            </div>
         );
     }
 }
