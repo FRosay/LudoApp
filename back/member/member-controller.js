@@ -3,8 +3,19 @@ const Member = require('./member-model');
 module.exports = class MemberController {
 
 	async create(member) {
-		await Member.create({ memberNumber: member.memberNumber, firstName: member.firstName, lastName: member.lastName, 
-							  subscriberTypes: member.subscriberTypes })
+		await Member.create({ 	memberNumber: member.memberNumber, 
+								firstName: member.firstName, 
+								lastName: member.lastName, 
+								subscriberTypes: member.subscriberTypes,
+								phoneHome: member.phoneHome,
+								phoneMobile: member.phoneMobile,
+								email: member.email,
+								adress: member.adress,
+								postalCode: member.postalCode,
+								city: member.city,
+								contribution: member.contribution,
+								contributionRate: member.contributionRate
+							})
 	}
 
 	async getAll() {

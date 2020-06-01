@@ -7,22 +7,18 @@ var memberSchema = new Schema({
   firstName: String,
   lastName: String,
   subscriberTypes: [String],
+  phoneHome: Number,
+  phoneMobile: Number,
+  email: String,
+  adress: String,
+  postalCode: Number,
+  city: String,
+  contribution: Number,
+  contributionRate: Number,
   loans: [{
     type: ObjectId, 
     ref: 'Loan'
   }],
-  adress: {
-    type: ObjectId, 
-    ref: 'Adress'
-  },
-  contact: {
-    type: ObjectId, 
-    ref: 'Contact'
-  },
-  membership: {
-    type: ObjectId, 
-    ref: 'Membership'
-  },
 });
 
 module.exports = mongoose.model('Member', memberSchema);
