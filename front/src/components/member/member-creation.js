@@ -8,23 +8,11 @@ import { Form, FormGroup, FormLabel, Col, Button } from 'react-bootstrap'
 
 
 const GAMECREATIONSCHEMA = Yup.object().shape({
-    name: Yup.string()
+    firstName: Yup.string()
         .max(40, 'Trop long')
         .required('Requis'),
-    availability: Yup.string()
+    lastName: Yup.string()
         .max(40, 'Trop long')
-        .required('Requis'),
-    gameType: Yup.string()
-        .max(40, 'Trop long')
-        .required('Requis'),
-    editor: Yup.string()
-        .max(40, 'Trop long')
-        .required('Requis'),
-    author: Yup.string()
-        .max(40, 'Trop long')    
-        .required('Requis'),
-    description: Yup.string()
-        .max(40, 'Trop long')    
         .required('Requis'),
 });
 
@@ -61,33 +49,29 @@ class MemberCreation extends React.Component {
     return (
         <div>
             <h2>Ajouter un.e adhérent.e</h2>
+            <br />
             <p>Numéro d'adhérent.e : { this.state.memberToCreate.memberNumber }</p>
             <Formik initialValues=  {{  firstName: '',
-                                        lastName: '',
-                                        subscriberTypes: '',
-                                        editor: '',
-                                        author: '',
-                                        description: '', }}
+                                        lastName: '' }}
                     validateOnBlur= { false }
                     validateOnChange= { false }
                     validationSchema= { GAMECREATIONSCHEMA }
                     onSubmit= { values => { this.formSubmitHandler(values) }}
             >
-                {({ handleSubmit, handleChange, handleBlur,
-                    values, touched, isValid, errors, 
+                {({ handleSubmit, handleChange, handleBlur, values 
                 }) => (
                     <Form noValidate onSubmit= { handleSubmit }>
                         <Form.Row>
-                            <FormGroup as= { Col } md='6' controlId= 'validationFormik01'>
+                            <FormGroup as= { Col } md='8' controlId= 'validationFormik01'>
                                 <FormLabel>Nom : </FormLabel>
-                                <Form.Control type= 'text' name= 'lastName' value= { values.lastName } onChange= { handleChange } 
-                                              onBlur= { handleBlur } isValid= { touched.lastName && !errors.lastName }/>
+                                <Form.Control type= 'text' name= 'lastName' value= { values.lastName } 
+                                              onChange= { handleChange } onBlur= { handleBlur } />
                             </FormGroup>
 
-                            <FormGroup as= { Col } md='6' controlId= 'validationFormik02'>
+                            <FormGroup as= { Col } md='8' controlId= 'validationFormik02'>
                                 <FormLabel>Prénom : </FormLabel>
-                                <Form.Control type= 'text' name= 'firstName' value= { values.firstName } onChange= { handleChange } 
-                                              onBlur= { handleBlur } isValid= { touched.firstName && !errors.firstName }>
+                                <Form.Control type= 'text' name= 'firstName' value= { values.firstName } 
+                                              onChange= { handleChange } onBlur= { handleBlur }>
                                 </Form.Control>
                             </FormGroup>
                         </Form.Row>

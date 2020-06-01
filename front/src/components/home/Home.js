@@ -19,68 +19,97 @@ const tabAnimation = {
     hover: { y: -5 }
 }
 
+
+
 class Home extends Component {
     render() {
         return (
-            <TabContainer defaultActiveKey='members' id='main-tab'>
-                <Nav variant="tabs" className="flex-row">
-                    <Nav.Item>
-                        <motion.div className= 'App' initial= 'out' animate= 'in'
-                                    exit= 'out' whileHover= 'hover' variants= { tabAnimation }>
-                            <Nav.Link eventKey="members">Gestion des adhérent.e.s</Nav.Link>
-                        </motion.div>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <motion.div className= 'App' initial= 'out' animate= 'in'
-                                    exit= 'out' whileHover= 'hover' variants= { tabAnimation }>
-                            <Nav.Link eventKey="games">Gestion des jeux</Nav.Link>
-                        </motion.div>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <motion.div className= 'App' initial= 'out' animate= 'in'
-                                    exit= 'out' whileHover= 'hover' variants= { tabAnimation }>
-                            <Nav.Link eventKey="loans">Gestion des prêts</Nav.Link>
-                        </motion.div>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <motion.div className= 'App' initial= 'out' animate= 'in'
-                                    exit= 'out' whileHover= 'hover' variants= { tabAnimation }>
-                            <Nav.Link eventKey="statistics">Statistiques</Nav.Link>
-                        </motion.div>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <motion.div className= 'App' initial= 'out' animate= 'in'
-                                    exit= 'out' whileHover= 'hover' variants= { tabAnimation }>
-                            <Nav.Link eventKey="settings">Paramètres</Nav.Link>
-                        </motion.div>
-                    </Nav.Item>
-                </Nav>
-                <TabContent>
-                    <TabPane eventKey='members'>
-                        <div className='defaultDiv'>
-                            <MemberCreation /><MembersList />
+            <div className='home-wrapper'>
+                <TabContainer defaultActiveKey='members' id='main-tab'>
+                    <div className='navbar navbar-expand-lg navbar-light fixed-top'>
+                        <div className='container'>
+                            <div className='collapse navbar-collapse' id='navbarTogglerDemo02'>
+                                <Nav variant="tabs" className="tabs-row">
+                                    <Nav.Item>
+                                        <motion.div className= 'App' initial= 'out' animate= 'in'
+                                                    exit= 'out' whileHover= 'hover' variants= { tabAnimation }>
+                                            <Nav.Link eventKey="members">Gestion des adhérent.e.s</Nav.Link>
+                                        </motion.div>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <motion.div className= 'App' initial= 'out' animate= 'in'
+                                                    exit= 'out' whileHover= 'hover' variants= { tabAnimation }>
+                                            <Nav.Link eventKey="games">Gestion des jeux</Nav.Link>
+                                        </motion.div>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <motion.div className= 'App' initial= 'out' animate= 'in'
+                                                    exit= 'out' whileHover= 'hover' variants= { tabAnimation }>
+                                            <Nav.Link eventKey="loans">Gestion des prêts</Nav.Link>
+                                        </motion.div>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <motion.div className= 'App' initial= 'out' animate= 'in'
+                                                    exit= 'out' whileHover= 'hover' variants= { tabAnimation }>
+                                            <Nav.Link eventKey="statistics">Statistiques</Nav.Link>
+                                        </motion.div>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <motion.div className= 'App' initial= 'out' animate= 'in'
+                                                    exit= 'out' whileHover= 'hover' variants= { tabAnimation }>
+                                            <Nav.Link eventKey="settings">Paramètres</Nav.Link>
+                                        </motion.div>
+                                    </Nav.Item>
+                                </Nav>
+                            </div>
                         </div>
-                    </TabPane>
-                    <TabPane eventKey='games'>
-                        <div className='defaultDiv'>
-                            <GameCreation /><GamesList />
-                        </div>
-                    </TabPane>
-                    <TabPane eventKey='loans'>
-                        <div className='defaultDiv'>
-                            <LoanCreation /><LoansList />
-                        </div>
-                    </TabPane>
-                    <TabPane eventKey='statistics'>
-                        <div>
-                            <p>Work in progress</p>
-                        </div>  
-                    </TabPane>
-                    <TabPane eventKey='settings'>
-                        <Link className='nav-link' to={'/login'}> Retour à la connexion</Link>
-                    </TabPane>
-                </TabContent>
-            </TabContainer>
+                    </div>
+                    <TabContent>
+                        <TabPane eventKey='members'>
+                            <div className= 'tabs-row'>
+                                <div className='home-inner'>
+                                    <MemberCreation />
+                                </div>
+                                <div className='home-inner'>
+                                    <MembersList />
+                                </div>
+                            </div>
+                        </TabPane>
+                        <TabPane eventKey='games'>
+                        <div className= 'tabs-row'>
+                                <div className='home-inner'>
+                                    <GameCreation />
+                                </div>
+                                <div className='home-inner'>
+                                    <GamesList />
+                                </div>
+                                
+                            </div>
+                        </TabPane>
+                        <TabPane eventKey='loans'>
+                        <div className= 'tabs-row'>
+                                <div className='home-inner'>
+                                    <LoanCreation />
+                                </div>
+                                <div className='home-inner'>
+                                    <LoansList />
+                                </div>
+                                
+                            </div>
+                        </TabPane>
+                        <TabPane eventKey='statistics'>
+                                <div className='home-inner'>
+                                    <p>Work in progress</p>
+                                </div>
+                        </TabPane>
+                        <TabPane eventKey='settings'>
+                            <div className='home-inner'>
+                                <Link className='nav-link' to={'/login'}> Retour à la connexion</Link>
+                            </div>
+                        </TabPane>
+                    </TabContent>
+                </TabContainer>
+            </div>
         );
     }
 }

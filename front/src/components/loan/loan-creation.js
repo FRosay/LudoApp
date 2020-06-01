@@ -101,7 +101,8 @@ class LoanCreation extends React.Component {
   render () {
     return (
         <div>
-            <h2>Déclarer un prêt</h2>
+            <h2>Enregistrer un prêt</h2>
+            <br />
             <p>Prêt numéro { this.state.loanToCreate.loanNumber !== null ? this.state.loanToCreate.loanNumber : '?' }</p>
             <Formik initialValues=  {{  startDate: new Date(),
                                         endDate: new Date(),
@@ -114,13 +115,13 @@ class LoanCreation extends React.Component {
                 }) => (
                     <Form noValidate onSubmit= { handleSubmit }>
                         <Form.Row>
-                            <FormGroup as= { Col } md='6' controlId= 'validationFormik01'>
+                            <FormGroup as= { Col } md='8' controlId= 'validationFormik01'>
                                 <FormLabel>Date de début : </FormLabel>
                                 <Form.Control as= { DatePicker } name= 'startDate' selected= { values.startDate } dateFormat='dd/MM/yyyy' value= { values.startDate } 
                                               onChange= { (date) => setFieldValue('startDate', date, true) } isValid= { touched.startDate && !errors.startDate } placeholderText= '01/01/2020'/>
                             </FormGroup>
 
-                            <FormGroup as= { Col } md='6' controlId= 'validationFormik02'>
+                            <FormGroup as= { Col } md='8' controlId= 'validationFormik02'>
                                 <FormLabel>Date de fin : </FormLabel>
                                 <Form.Control as= { DatePicker } name= 'endDate' selected= { values.endDate } dateFormat='dd/MM/yyyy' value= { values.endDate } 
                                               onChange= { (date) => setFieldValue('endDate', date, true) } isValid= { touched.endDate && !errors.endDate } placeholderText= '01/01/2020'>

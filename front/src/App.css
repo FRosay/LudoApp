@@ -99,9 +99,3 @@ body, html, .App, #root, .auth-wrapper {
   border-style: solid;
   border-top-width: 0px;
 }
-
-.defaultDiv {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-}
