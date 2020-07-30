@@ -95,9 +95,9 @@ class GameCreation extends React.Component {
                                             description: '',
                                             esarIndexes: '',
                                             usualGameLength: '',
-                                            minPlayers: 99,
+                                            minPlayers: 1,
                                             maxPlayers: 99,
-                                            minAge: 99,
+                                            minAge: 1,
                                             location: '', }}
                         validationSchema= { this.GAMECREATIONSCHEMA }
                         onSubmit= { async (values, { resetForm }) => { await this.formSubmitHandler(values)

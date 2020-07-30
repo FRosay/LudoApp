@@ -31,7 +31,7 @@ class MembersList extends React.Component {
   }
 
   deleteAllMembers() {
-    axios.delete('http://localhost:5000/member/delete/')
+    axios.delete('http://localhost:5000/member/delete/');
   }
 
   render () {
@@ -40,7 +40,7 @@ class MembersList extends React.Component {
         <h2>Liste des adhérent.e.s :</h2>
         <br/>
         {this.state.members.map((member, index) => {
-          return <Member key= { index } memberId= { member._id } firstName= { member.firstName } lastName= { member.lastName }></Member>
+          return <Member key= { index } shortDisplay= { true } memberId= { member._id } firstName= { member.firstName } lastName= { member.lastName }></Member>
         })}
         <br/>
         <button onClick= { () => this.getAllMembers() }>Rafraîchir</button>

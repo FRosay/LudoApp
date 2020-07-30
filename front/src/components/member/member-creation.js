@@ -26,7 +26,9 @@ class MemberCreation extends React.Component {
         }
 
         this.createMember = this.createMember.bind(this)
-        this.formSubmitHandler = this.formSubmitHandler.bind(this)        
+        this.formSubmitHandler = this.formSubmitHandler.bind(this)
+        
+        this.setMemberNumber()
     }
 
     createMember() {

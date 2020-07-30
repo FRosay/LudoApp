@@ -43,10 +43,14 @@ class Game extends React.Component {
     return (
         <div>
             <p>Nom : { this.state.name }</p>
-            <p>Statut : { availability }</p>
-            <p>Type : { this.state.gameType }</p>
-            <p>Edité par : { this.state.editor }</p>
-            <p>Créé par : { this.state.author }</p>
+            <p>
+              Statut : { availability } <br />
+              Type : { this.state.gameType }
+            </p>
+            <p>
+              Edité par : { this.state.editor } <br />
+              Créé par : { this.state.author }
+            </p>
             <p>Description : { this.state.description }</p>
             <br/>
         </div>
