@@ -1,9 +1,6 @@
 const MemberController = require("./member/member-controller.js");
 const GameController = require("./game/game-controller.js");
 const LoanController = require("./loan/loan-controller.js");
-const ContactController = require("./member/contact/contact-controller.js");
-const AdressController = require("./member/adress/adress-controller.js");
-const MembershipController = require("./member/membership/membership-controller.js");
 const mongoose = require('mongoose')
 const express = require('express');
 const morgan = require('morgan')
@@ -13,9 +10,6 @@ const PORT = 5000;
 const memberController = new MemberController()
 const gameController = new GameController()
 const loanController = new LoanController()
-const contactController = new ContactController()
-const adressController = new AdressController()
-const membershipController = new MembershipController()
 
 // Connection
 

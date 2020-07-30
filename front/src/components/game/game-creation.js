@@ -25,18 +25,33 @@ class GameCreation extends React.Component {
             availability: Yup.string()
                 .max(40, 'Trop long')
                 .required('Requis'),
-            gameType: Yup.string()
+            authors: Yup.string()
                 .max(40, 'Trop long')
                 .required('Requis'),
             editor: Yup.string()
-                .max(40, 'Trop long')
-                .required('Requis'),
-            author: Yup.string()
-                .max(40, 'Trop long')    
-                .required('Requis'),
+                .max(40, 'Trop long'),
+            distributor: Yup.string()
+                .max(40, 'Trop long'),
+            publishYear: Yup.number()
+                .min(4)
+                .max(4),
             description: Yup.string()
                 .max(40, 'Trop long')    
                 .required('Requis'),
+            esarIndexes: Yup.array()
+                .max(40, 'Trop long'),
+            usualGameLength: Yup.number()
+                .max(40, 'Trop long')    
+                .required('Requis'),
+            minPlayers: Yup.number()
+                .max(40, 'Trop long')    
+                .required('Requis'),
+            maxPlayers: Yup.number()
+                .max(40, 'Trop long')    
+                .required('Requis'),
+            minAge: Yup.number()
+                .max(2, 'Trop long'),
+            location: Yup.string()
         });
     }
 
@@ -47,14 +62,21 @@ class GameCreation extends React.Component {
     };
 
     formSubmitHandler(values) {
-        
         let newGame = this.state.gameToCreate
-        newGame.name = values.name
-        newGame.gameType = values.gameType
-        newGame.availability = values.availability
-        newGame.author = values.author
-        newGame.editor = values.editor
-        newGame.description = values.description
+
+        newGame.name            = values.name
+        newGame.availability    = values.availability
+        newGame.authors         = values.authors
+        newGame.editor          = values.editor
+        newGame.distributor     = values.distributor
+        newGame.publishYear     = values.publishYear
+        newGame.description     = values.description
+        newGame.esarIndexes     = values.esarIndexes
+        newGame.usualGameLength = values.usualGameLength
+        newGame.minPlayers      = values.minPlayers
+        newGame.maxPlayers      = values.maxPlayers
+        newGame.minAge          = values.minAge
+        newGame.location        = values.location
 
         this.createGame()
     };
@@ -64,12 +86,19 @@ class GameCreation extends React.Component {
             <div>
                 <h2>Ajouter un jeu</h2>
                 <br />
-                <Formik initialValues=  {{ name: '',
-                                        availability: this.state.gameToCreate.availability,
-                                        gameType: '',
-                                        editor: '',
-                                        author: '',
-                                        description: '', }}
+                <Formik initialValues=  {{  name: '',
+                                            availability: this.state.gameToCreate.availability,
+                                            authors: [],
+                                            editor: '',
+                                            distributor: '',
+                                            publishYear: 9999,
+                                            description: '',
+                                            esarIndexes: '',
+                                            usualGameLength: '',
+                                            minPlayers: 99,
+                                            maxPlayers: 99,
+                                            minAge: 99,
+                                            location: '', }}
                         validationSchema= { this.GAMECREATIONSCHEMA }
                         onSubmit= { async (values, { resetForm }) => { await this.formSubmitHandler(values)
                                                                                               resetForm() }}
@@ -81,14 +110,14 @@ class GameCreation extends React.Component {
                         <Form.Row>
                             <FormGroup as= { Col } md='8' controlId= 'validationFormik01'>
                                 <FormLabel>Nom du jeu : </FormLabel>
-                                <Form.Control type= 'text' name= 'name' value= { values.name } onChange= { handleChange } 
-                                              isValid= { touched.lastName && !errors.lastName }/>
+                                <Form.Control type= 'text' name= 'name' value= { values.name } onChange= { handleChange }
+                                              isValid= { touched.name && !errors.name }/>
                             </FormGroup>
 
                             <FormGroup as= { Col } md='8' controlId= 'validationFormik02'>
-                                <FormLabel>Type de jeu : </FormLabel>
-                                <Form.Control type= 'text' name= 'gameType' value= { values.gameType } onChange= { handleChange } 
-                                              isValid= { touched.lastName && !errors.lastName }>
+                                <FormLabel>Localisation : </FormLabel>
+                                <Form.Control type= 'text' name= 'location' value= { values.location } onChange= { handleChange } 
+                                              isValid= { touched.location && !errors.location }>
                                 </Form.Control>
                             </FormGroup>
                         </Form.Row>
@@ -96,32 +125,54 @@ class GameCreation extends React.Component {
                         <FormGroup as= { Col } md='8' controlId= 'validationFormik03'>
                             <FormLabel>Disponibilité : </FormLabel>
                             <Form.Control as= 'select' name= 'availability' value= { values.availability } onChange= { handleChange } 
-                                          isValid= { touched.lastName && !errors.lastName }>
+                                          isValid= { touched.availability && !errors.availability }>
                                 <option value= 'Available'>Disponible</option>
                                 <option value= 'InRepair'>En réparation</option>
                                 <option value= 'Loaned'>Prêté</option>
                             </Form.Control>
                         </FormGroup>
 
+                        <FormGroup as= { Col } md='8' controlId= 'validationFormik04'>
+                            <FormLabel>Distribué par : </FormLabel>
+                            <Form.Control type= 'text' name= 'authors' value= { values.author } onChange= { handleChange } 
+                                            isValid= { touched.authors && !errors.authors }>
+                            </Form.Control>
+                        </FormGroup>
+
                         <Form.Row>
-                            <FormGroup as= { Col } md='8' controlId= 'validationFormik04'>
-                                <FormLabel>Créé par : </FormLabel>
-                                <Form.Control type= 'text' name= 'author' value= { values.author } onChange= { handleChange } 
-                                                isValid= { touched.lastName && !errors.lastName }>
-                                </Form.Control>
-                            </FormGroup>
                             <FormGroup as= { Col } md='8' controlId= 'validationFormik05'>
                                 <FormLabel>Édité par : </FormLabel>
                                 <Form.Control type= 'text' name= 'editor' value= { values.editor } onChange= { handleChange } 
-                                                isValid= { touched.lastName && !errors.lastName }>
+                                                isValid= { touched.editor && !errors.editor }>
+                                </Form.Control>
+                            </FormGroup>
+                            <FormGroup as= { Col } md='8' controlId= 'validationFormik06'>
+                                <FormLabel>Créé par : </FormLabel>
+                                <Form.Control type= 'text' name= 'distributor' value= { values.distributor } onChange= { handleChange } 
+                                                isValid= { touched.distributor && !errors.distributor }>
                                 </Form.Control>
                             </FormGroup>
                         </Form.Row>
 
-                        <FormGroup as= { Col } md='14' controlId= 'validationFormik06'>
+                        <Form.Row>
+                            <FormGroup as= { Col } md='8' controlId= 'validationFormik07'>
+                                <FormLabel>Nombre minimum de joueurs : </FormLabel>
+                                <Form.Control type= 'text' name= 'minPlayers' value= { values.minPlayers } onChange= { handleChange } 
+                                                isValid= { touched.minPlayers && !errors.minPlayers }>
+                                </Form.Control>
+                            </FormGroup>
+                            <FormGroup as= { Col } md='8' controlId= 'validationFormik08'>
+                                <FormLabel>Nombre maximum de joueurs : </FormLabel>
+                                <Form.Control type= 'text' name= 'maxPlayers' value= { values.maxPlayers } onChange= { handleChange } 
+                                                isValid= { touched.maxPlayers && !errors.maxPlayers }>
+                                </Form.Control>
+                            </FormGroup>
+                        </Form.Row>
+
+                        <FormGroup as= { Col } md='14' controlId= 'validationFormik09'>
                             <FormLabel>Description : </FormLabel>
                             <Form.Control as= 'textarea' rows= '3' name= 'description' value= { values.description } onChange= { handleChange } 
-                                            isValid= { touched.lastName && !errors.lastName }>
+                                            isValid= { touched.description && !errors.description }>
                             </Form.Control>
                         </FormGroup>
 
