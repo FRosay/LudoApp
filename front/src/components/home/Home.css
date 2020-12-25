@@ -2,19 +2,26 @@ h1,h2,h3,h4,h5,h6 {
     text-align: center;
 }
 
-.home-wrapper  {
-    background: #1C8EF9 !important;
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    justify-content: space-evenly;
-    padding: 25px;
-    margin-top: 61px;
-    width: 100%;
+.home {
     height: 100%;
 }
 
-.home-inner {
+.navbar {
+    text-align: center;
+    height: 54px;
+    background-color: #ffffff;
+}
+
+.tabs-row {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+    margin-top: 3px;
+}
+
+.tab-inner {
     width: 100%;
     margin-left: 20px;
     margin-right: 20px;
@@ -24,8 +31,11 @@ h1,h2,h3,h4,h5,h6 {
     transition: all .3s;
 }
 
-.tabs-row {
-    display:flex;
+.main-display {
+    background: #1C8EF9 !important;
+    display: flex;
+    justify-content: center;
     flex-direction: row;
-    margin-top: 3px;
-}
+    text-align: left;
+    margin: 15px;
+  }

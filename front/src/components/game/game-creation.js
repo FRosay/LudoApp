@@ -134,22 +134,20 @@ class GameCreation extends React.Component {
 
                         <FormGroup as= { Col } md='8' controlId= 'validationFormik04'>
                             <FormLabel>Distribué par : </FormLabel>
-                            <Form.Control type= 'text' name= 'authors' value= { values.author } onChange= { handleChange } 
-                                            isValid= { touched.authors && !errors.authors }>
+                            <Form.Control type= 'text' name= 'distributor' value= { values.distributor } onChange= { handleChange } 
+                                            isValid= { touched.distributor && !errors.distributor }>
                             </Form.Control>
                         </FormGroup>
 
                         <Form.Row>
-                            <FormGroup as= { Col } md='8' controlId= 'validationFormik05'>
+                            <FormGroup as= { Col } md='16' controlId= 'validationFormik05'>
                                 <FormLabel>Édité par : </FormLabel>
                                 <Form.Control type= 'text' name= 'editor' value= { values.editor } onChange= { handleChange } 
                                                 isValid= { touched.editor && !errors.editor }>
                                 </Form.Control>
-                            </FormGroup>
-                            <FormGroup as= { Col } md='8' controlId= 'validationFormik06'>
                                 <FormLabel>Créé par : </FormLabel>
-                                <Form.Control type= 'text' name= 'distributor' value= { values.distributor } onChange= { handleChange } 
-                                                isValid= { touched.distributor && !errors.distributor }>
+                                <Form.Control type= 'text' name= 'authors' value= { values.authors } onChange= { handleChange } 
+                                                isValid= { touched.authors && !errors.authors }>
                                 </Form.Control>
                             </FormGroup>
                         </Form.Row>

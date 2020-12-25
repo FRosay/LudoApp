@@ -47,24 +47,21 @@ class Login extends Component {
             return <Redirect to= {this.state.redirect} />
         }
         return (
-            <div className='auth-wrapper'>
-                <nav className='navbar navbar-expand-lg navbar-light fixed-top'>
-                    <div className='container'>
-                        <div className='collapse navbar-collapse' id='navbarTogglerDemo02'>
-                            <ul className='navbar-nav ml-auto'>
-                                <li className='nav-item'>
-                                    <Link className= 'nav-link' to= { '/home' }>Voir le site</Link>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+            <div>
+                <nav className='navbar'>
+                    <ul className='navbar-nav ml-auto'>
+                        <li className='nav-item'>
+                            <Link className= 'nav-link' to= { '/home' }>Voir le site</Link>
+                        </li>
+                    </ul>
                 </nav>
+
                 <motion.div animate= {{ y: [-400, -180, 50, -70, 25, -35, 12, -17, 0] }} transition= {{ duration: 0.9 }} >
-                    <div className='auth-inner' >
+                    <div className='inner' >
                         <h1>Ludogiciel</h1>
                     </div>
                     
-                    <div className='auth-inner'>
+                    <div className='inner'>
                         <h3>Connexion</h3>
                         <Formik
                             initialValues= {{ username: '', password: '' }}
