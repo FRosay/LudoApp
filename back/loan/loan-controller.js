@@ -22,8 +22,8 @@ module.exports = class LoanController {
         return await Loan.findOne().sort({ field: 'asc', _id: -1 }).limit(1)
     }
 
-	async delete() {
-		await Loan.find({}).remove()
+	async deleteAll() {
+		await Loan.find({}).deleteMany()
 	}
 	
 }

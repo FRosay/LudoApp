@@ -13,8 +13,10 @@ const loanController = new LoanController()
 
 // Connection
 
+mongoose.set('useUnifiedTopology', true);
+
 const connectWithRetry = function () {
-    return mongoose.connect("mongodb://localhost:27017/myapp")
+    return mongoose.connect("mongodb://localhost:27017/myapp", { useNewUrlParser: true })
         .then(() => {
             console.log("Connecting to database")
         })

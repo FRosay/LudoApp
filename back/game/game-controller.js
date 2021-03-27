@@ -14,8 +14,8 @@ module.exports = class GameController {
 		return await Game.find({}).exec()
 	}
 
-	async delete() {
-		await Game.find({}).remove()
+	async deleteAll() {
+		await Game.find({}).deleteMany()
 	}
 
 }
