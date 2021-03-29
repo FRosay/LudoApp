@@ -90,13 +90,13 @@ function MemberCreation() {
                             <FormGroup as= { Col } md='6' controlId= 'validationFormik01'>
                                 <FormLabel>Nom : </FormLabel>
                                 <Form.Control type= 'text' name= 'lastName' value= { values.lastName } 
-                                              onChange= { handleChange } onBlur= { handleBlur } />
+                                            onChange= { handleChange } onBlur= { handleBlur } />
                             </FormGroup>
 
                             <FormGroup as= { Col } md='6' controlId= 'validationFormik02'>
                                 <FormLabel>Prénom : </FormLabel>
                                 <Form.Control type= 'text' name= 'firstName' value= { values.firstName } 
-                                              onChange= { handleChange } onBlur= { handleBlur }>
+                                            onChange= { handleChange } onBlur= { handleBlur }>
                                 </Form.Control>
                             </FormGroup>
                         </Form.Row>
@@ -105,18 +105,18 @@ function MemberCreation() {
                             <FormGroup as= { Col } md='12' controlId= 'validationFormik03'>
                                 <FormLabel>Adresse : </FormLabel>
                                 <Form.Control type= 'text' name= 'adress' value= { values.adress } 
-                                              onChange= { handleChange } onBlur= { handleBlur } />
+                                            onChange= { handleChange } onBlur= { handleBlur } />
                             </FormGroup>
                             <FormGroup as= { Col } md='6' controlId= 'validationFormik04'>
                                 <FormLabel>Ville : </FormLabel>
                                 <Form.Control type= 'text' name= 'city' value= { values.city } 
-                                              onChange= { handleChange } onBlur= { handleBlur }>
+                                            onChange= { handleChange } onBlur= { handleBlur }>
                                 </Form.Control>
                             </FormGroup>
                             <FormGroup as= { Col } md='6' controlId= 'validationFormik05'>
                                 <FormLabel>Code Postal : </FormLabel>
                                 <Form.Control type= 'number' name= 'postalCode' value= { values.postalCode } 
-                                              onChange= { handleChange } onBlur= { handleBlur }>
+                                            onChange= { handleChange } onBlur= { handleBlur }>
                                 </Form.Control>
                             </FormGroup>
                         </Form.Row>
@@ -125,19 +125,19 @@ function MemberCreation() {
                             <FormGroup as= { Col } md='3' controlId= 'validationFormik06'>
                                 <FormLabel>Téléphone fixe : </FormLabel>
                                 <Form.Control type= 'text' name= 'phoneHome' value= { values.phoneHome } 
-                                              onChange= { handleChange } onBlur= { handleBlur } />
+                                            onChange= { handleChange } onBlur= { handleBlur } />
                                 { errors.phoneHome && touched.phoneHome ? <div>{ errors.phoneHome }</div> : null }
                             </FormGroup>
                             <FormGroup as= { Col } md='3' controlId= 'validationFormik07'>
                                 <FormLabel>Téléphone mobile : </FormLabel>
                                 <Form.Control type= 'text' name= 'phoneMobile' value= { values.phoneMobile } 
-                                              onChange= { handleChange } onBlur= { handleBlur } />
+                                            onChange= { handleChange } onBlur= { handleBlur } />
                                 { errors.phoneMobile && touched.phoneMobile ? <div>{ errors.phoneMobile }</div> : null }
                             </FormGroup>
                             <FormGroup as= { Col } md='6' controlId= 'validationFormik08'>
                                 <FormLabel>Adresse mail : </FormLabel>
                                 <Form.Control type= 'email' name= 'email' value= { values.email } 
-                                              onChange= { handleChange } onBlur= { handleBlur } />
+                                            onChange= { handleChange } onBlur= { handleBlur } />
                                 { errors.email && touched.email ? <div>{ errors.email }</div> : null }
                             </FormGroup>
                         </Form.Row>
@@ -146,12 +146,12 @@ function MemberCreation() {
                             <FormGroup as= { Col } md='5' controlId= 'validationFormik09'>
                                 <FormLabel>Contribution (en €) : </FormLabel>
                                 <Form.Control type= 'number' name= 'contribution' value= { values.contribution } 
-                                              onChange= { handleChange } onBlur= { handleBlur } />
+                                            onChange= { handleChange } onBlur= { handleBlur } />
                             </FormGroup>
                             <FormGroup as= { Col } md='5' controlId= 'validationFormik10'>
                                 <FormLabel>Taux de contribution (en %) : </FormLabel>
                                 <Form.Control type= 'number' name= 'contributionRate' value= { values.contributionRate } 
-                                              onChange= { handleChange } onBlur= { handleBlur }>
+                                            onChange= { handleChange } onBlur= { handleBlur }>
                                 </Form.Control>
                             </FormGroup>
                         </Form.Row>
