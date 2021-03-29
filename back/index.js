@@ -62,7 +62,7 @@ api.post('/game', async (req, res) => {
 
 api.delete('/game/delete/', async (req, res) => {
     try {
-        await gameController.delete()
+        await gameController.deleteAll()
     } catch(e) {
         res.send(e).status(500)
     }
@@ -92,7 +92,7 @@ api.post('/member', async (req, res) => {
 
 api.delete('/member/delete/', async (req, res) => {
     try {
-        await memberController.delete()
+        await memberController.deleteAll()
     } catch(e) {
         res.send(e).status(500)
     }
@@ -121,7 +121,7 @@ api.post('/loan', async (req, res) => {
 
 api.delete('/loan/delete/', async (req, res) => {
     try {
-        await loanController.delete()
+        await loanController.deleteAll()
     } catch(e) {
         res.send(e).status(500)
     }
