@@ -4,10 +4,11 @@ import Member from '../../assets/images/Member.png';
 import MembersList from '../../assets/images/membersList.png';
 import AddGame from '../../assets/images/addGame.png';
 import GamesList from '../../assets/images/gamesList.png';
-import Login from '../../assets/images/login.png';
 import AddLoan from '../../assets/images/addLoan.png';
 import LoansList from '../../assets/images/loansList.png';
 import HomeMenuButton from '../misc/home-menu-button.js';
+
+import './Home.css'
 
 function Home() {
     return (
@@ -23,9 +24,6 @@ function Home() {
             <div className='home-inner'>
                 <HomeMenuButton text='Déclarer un prêt' alt='Déclarer un prêt' image={ AddLoan } link='/addLoan' />
                 <HomeMenuButton text='Voir les prêts' alt='Voir les prêts' image={ LoansList } link='/loansList' />
-            </div>
-            <div className='home-inner'>
-                <HomeMenuButton text='Retour à la connexion' alt='Retour à la connexion' image={ Login } link='/login' />
             </div>
         </div>
     )

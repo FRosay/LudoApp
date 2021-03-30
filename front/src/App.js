@@ -36,8 +36,10 @@ function App() {
               </Switch>
             </AnimatePresence>
           </div>
-          <div className='tab-inner'>
-            <Link className='nav-link' to={'/home'}>Retour à l'accueil</Link>
+          <div className='footer'>
+            <Link className='nav-link' to={ '/home' }>Retour à l'accueil</Link>
+            
+            <Link className='nav-link' to={ '/login' }>Retour à la connexion</Link>
           </div>
         </div>
       </div>
