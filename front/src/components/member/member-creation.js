@@ -27,10 +27,10 @@ function MemberCreation() {
                                                           contactInfo: {phoneHome: '', phoneMobile: '', email: ''}, memberInfo: {memberId: '', contribution: '', contributionRate: ''}});
     const [getLastNumber, setGetLastNumber] = useState(true)
 
-    function createMember() {
+    function createMember(newMember) {
         axios.post('http://localhost:5000/member', {
-            member: memberToCreate
-        }).then(() => alert('Membre ajouté : ' + memberToCreate.nameInfo.firstName + ' ' + memberToCreate.nameInfo.lastName + '.'))
+            member: newMember
+        }).then(() => alert('Membre ajouté : ' + newMember.nameInfo.firstName + ' ' + newMember.nameInfo.lastName + '.'))
           .then(() => { setMemberNumber() })
     };
 
@@ -59,7 +59,8 @@ function MemberCreation() {
         newMember.memberInfo.contribution       = values.contribution
         newMember.memberInfo.contributionRate   = values.contributionRate
 
-        setMemberToCreate(newMember)        
+        setMemberToCreate(newMember)
+        createMember(newMember)       
     };
 
     if (getLastNumber === true) {
@@ -79,8 +80,7 @@ function MemberCreation() {
                     validateOnBlur=     { true }
                     validateOnChange=   { true }
                     validationSchema=   { MEMBERCREATIONSCHEMA }
-                    onSubmit=           { async (values) => { await formSubmitHandler(values)
-                                                                                   createMember() }}
+                    onSubmit=           { async (values) => { await formSubmitHandler(values) }}
             >
                 {({ handleSubmit, handleChange, handleBlur, errors, touched, values 
                 }) => (

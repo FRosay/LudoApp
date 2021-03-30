@@ -26,10 +26,10 @@ function GameCreation() {
         location:           Yup.string()
     });
 
-    function createGame() {
+    function createGame(newGame) {
         axios.post('http://localhost:5000/game', {
-            game: gameToCreate
-        }).then(() => alert('Jeu ajouté : ' + gameToCreate.name + '.'))
+            game: newGame
+        }).then(() => alert('Jeu ajouté : ' + newGame.name + '.'))
     };
 
     function formSubmitHandler(values) {
@@ -50,6 +50,7 @@ function GameCreation() {
         newGame.location        = values.location
 
         setGameToCreate(newGame)
+        createGame(newGame)
     };
        
     return (
@@ -70,8 +71,7 @@ function GameCreation() {
                                         minAge: gameToCreate.minAge,
                                         location: gameToCreate.location }}
                     validationSchema= { GAMECREATIONSCHEMA }
-                    onSubmit= { async (values) => { await formSubmitHandler(values)
-                                                          createGame() }}
+                    onSubmit= { async (values) => { await formSubmitHandler(values) }}
             >
             {({ handleSubmit, handleChange,
                 values, touched, errors, 
