@@ -51,6 +51,11 @@ api.get('/games', async (_, res) => {
     res.json(games);
 });
 
+api.get('/games-available', async (_, res) => {
+    const games = await gameController.getAvailable()
+    res.json(games);
+});
+
 api.post('/game', async (req, res) => {
     try {
         await gameController.create(req.body.game)
@@ -58,6 +63,15 @@ api.post('/game', async (req, res) => {
     } catch(e) {
         res.send(e).status(500);
     }
+});
+
+api.post('/game/availability', async (req, res) => {
+    try {
+        await gameController.changeGameAvailability(req.body.gameId, req.body.newAvailability)
+        res.sendStatus(200);
+    } catch(e) {
+        res.send(e).status(500);
+    } 
 });
 
 api.delete('/game/delete/', async (req, res) => {

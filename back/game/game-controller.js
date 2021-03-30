@@ -10,8 +10,16 @@ module.exports = class GameController {
 							location: game.location})
 	}
 
+	async changeGameAvailability(gameId, newAvailability) {
+		await Game.findByIdAndUpdate(gameId, { availability: newAvailability })
+	}
+
 	async getAll() {
 		return await Game.find({}).exec()
+	}
+
+	async getAvailable() {
+		return await Game.find({ availability: 'Available' }).exec()
 	}
 
 	async deleteAll() {

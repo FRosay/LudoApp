@@ -34,7 +34,8 @@ function LoanCreation() {
         if (newLoan.memberId !== 'Empty' && newLoan.gameId !== 'Empty') {
             axios.post('http://localhost:5000/loan', {
                 loan: newLoan
-            }).then(() => { setLoanNumber() })
+            }).then(() => {  axios.post('http://localhost:5000/game/availability', { gameId: newLoan.gameId, newAvailability: 'Loaned' }) })
+            .then(() => { setLoanNumber() })
         }
     };
 
@@ -47,9 +48,9 @@ function LoanCreation() {
         })
     };
 
-    function getAllGames() {
+    function getAllAvailableGames() {
         return new Promise(() => {
-            axios.get('http://localhost:5000/games')
+            axios.get('http://localhost:5000/games-available')
                 .then((response) => {
                 setGames(response.data)
             })
@@ -72,7 +73,7 @@ function LoanCreation() {
     if (init === true) {
         setLoanNumber()
         getAllMembers()
-        getAllGames()
+        getAllAvailableGames()
         setInit(false)
     };
 
