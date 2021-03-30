@@ -5,6 +5,8 @@ import MembersList from '../../assets/images/membersList.png';
 import AddGame from '../../assets/images/addGame.png';
 import GamesList from '../../assets/images/gamesList.png';
 import Login from '../../assets/images/login.png';
+import AddLoan from '../../assets/images/addLoan.png';
+import LoansList from '../../assets/images/loansList.png';
 import HomeMenuButton from '../misc/home-menu-button.js';
 
 function Home() {
@@ -17,6 +19,10 @@ function Home() {
             <div className='home-inner'>
                 <HomeMenuButton text='Ajouter un jeu' alt='Ajouter un jeu' image={ AddGame } link='/addGame' />
                 <HomeMenuButton text='Liste des jeux' alt='Liste des jeux' image={ GamesList } link='/gamesList' />
+            </div>
+            <div className='home-inner'>
+                <HomeMenuButton text='Déclarer un prêt' alt='Déclarer un prêt' image={ AddLoan } link='/addLoan' />
+                <HomeMenuButton text='Voir les prêts' alt='Voir les prêts' image={ LoansList } link='/loansList' />
             </div>
             <div className='home-inner'>
                 <HomeMenuButton text='Retour à la connexion' alt='Retour à la connexion' image={ Login } link='/login' />

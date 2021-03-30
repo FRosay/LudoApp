@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Form, FormGroup, FormLabel, Col, Button } from 'react-bootstrap'
+import './member.css'
 
 
 function MemberCreation() {
@@ -59,9 +59,7 @@ function MemberCreation() {
         newMember.memberInfo.contribution       = values.contribution
         newMember.memberInfo.contributionRate   = values.contributionRate
 
-        setMemberToCreate(newMember)
-
-        createMember()
+        setMemberToCreate(newMember)        
     };
 
     if (getLastNumber === true) {
@@ -81,7 +79,8 @@ function MemberCreation() {
                     validateOnBlur=     { true }
                     validateOnChange=   { true }
                     validationSchema=   { MEMBERCREATIONSCHEMA }
-                    onSubmit=           { async (values, { resetForm }) => { await formSubmitHandler(values) }}
+                    onSubmit=           { async (values) => { await formSubmitHandler(values)
+                                                                                   createMember() }}
             >
                 {({ handleSubmit, handleChange, handleBlur, errors, touched, values 
                 }) => (
@@ -96,8 +95,7 @@ function MemberCreation() {
                             <FormGroup as= { Col } md='6' controlId= 'validationFormik02'>
                                 <FormLabel>Prénom : </FormLabel>
                                 <Form.Control type= 'text' name= 'firstName' value= { values.firstName } 
-                                            onChange= { handleChange } onBlur= { handleBlur }>
-                                </Form.Control>
+                                            onChange= { handleChange } onBlur= { handleBlur } />
                             </FormGroup>
                         </Form.Row>
 
@@ -110,14 +108,12 @@ function MemberCreation() {
                             <FormGroup as= { Col } md='6' controlId= 'validationFormik04'>
                                 <FormLabel>Ville : </FormLabel>
                                 <Form.Control type= 'text' name= 'city' value= { values.city } 
-                                            onChange= { handleChange } onBlur= { handleBlur }>
-                                </Form.Control>
+                                            onChange= { handleChange } onBlur= { handleBlur } />
                             </FormGroup>
                             <FormGroup as= { Col } md='6' controlId= 'validationFormik05'>
                                 <FormLabel>Code Postal : </FormLabel>
                                 <Form.Control type= 'number' name= 'postalCode' value= { values.postalCode } 
-                                            onChange= { handleChange } onBlur= { handleBlur }>
-                                </Form.Control>
+                                            onChange= { handleChange } onBlur= { handleBlur } />
                             </FormGroup>
                         </Form.Row>
 
@@ -151,8 +147,7 @@ function MemberCreation() {
                             <FormGroup as= { Col } md='5' controlId= 'validationFormik10'>
                                 <FormLabel>Taux de contribution (en %) : </FormLabel>
                                 <Form.Control type= 'number' name= 'contributionRate' value= { values.contributionRate } 
-                                            onChange= { handleChange } onBlur= { handleBlur }>
-                                </Form.Control>
+                                            onChange= { handleChange } onBlur= { handleBlur } />
                             </FormGroup>
                         </Form.Row>
 
@@ -162,7 +157,6 @@ function MemberCreation() {
             </Formik>
         </div>
     );
- 
 };
 
 export default MemberCreation;

@@ -7,33 +7,34 @@ import { Form, FormGroup, FormLabel, Col, Button } from 'react-bootstrap'
 
 function GameCreation() {
 
-    const [gameToCreate, setGameToCreate] = useState({ availability: 'Available' })
+    const [gameToCreate, setGameToCreate] = useState({ name: '', availability: 'Available', authors: '', editor: '', distributor: '', publishYear: 2000, description: '', 
+                                                        esarIndexes: '', usualGameLength: 20, minPlayers: 2, maxPlayers: 12, minAge: 2, location: '' })
 
     const GAMECREATIONSCHEMA = Yup.object().shape({
-        name: Yup.string().max(40, 'Trop long').required('Requis'),
-        availability: Yup.string().max(40, 'Trop long').required('Requis'),
-        authors: Yup.string().max(40, 'Trop long').required('Requis'),
-        editor: Yup.string().max(40, 'Trop long'),
-        distributor: Yup.string().max(40, 'Trop long'),
-        publishYear: Yup.number().min(4).max(4),
-        description: Yup.string().max(40, 'Trop long').required('Requis'),
-        esarIndexes: Yup.array().max(40, 'Trop long'),
-        usualGameLength: Yup.number().max(40, 'Trop long').required('Requis'),
-        minPlayers: Yup.number().max(40, 'Trop long').required('Requis'),
-        maxPlayers: Yup.number().max(40, 'Trop long').required('Requis'),
-        minAge: Yup.number().max(2, 'Trop long'),
-        location: Yup.string()
+        name:               Yup.string().max(40, 'Trop long').required('Requis'),
+        availability:       Yup.string().max(40, 'Trop long').required('Requis'),
+        authors:            Yup.string().max(40, 'Trop long').required('Requis'),
+        editor:             Yup.string().max(40, 'Trop long'),
+        distributor:        Yup.string().max(40, 'Trop long'),
+        publishYear:        Yup.number(),
+        description:        Yup.string().max(40, 'Trop long').required('Requis'),
+        esarIndexes:        Yup.string().max(40, 'Trop long'),
+        usualGameLength:    Yup.number().max(40, 'Trop long').required('Requis'),
+        minPlayers:         Yup.number().max(40, 'Trop long').required('Requis'),
+        maxPlayers:         Yup.number().max(40, 'Trop long').required('Requis'),
+        minAge:             Yup.number(),
+        location:           Yup.string()
     });
 
     function createGame() {
         axios.post('http://localhost:5000/game', {
             game: gameToCreate
-        }).then(() => alert('Jeu ajouté : ' + this.state.gameToCreate.name + '.'))
+        }).then(() => alert('Jeu ajouté : ' + gameToCreate.name + '.'))
     };
 
     function formSubmitHandler(values) {
-        let newGame = {...gameToCreate}
-
+        let newGame = {}
+        
         newGame.name            = values.name
         newGame.availability    = values.availability
         newGame.authors         = values.authors
@@ -47,35 +48,33 @@ function GameCreation() {
         newGame.maxPlayers      = values.maxPlayers
         newGame.minAge          = values.minAge
         newGame.location        = values.location
-        
-        setGameToCreate(newGame)
 
-        createGame()
+        setGameToCreate(newGame)
     };
        
     return (
         <div>
             <h2>Ajouter un jeu</h2>
             <br />
-            <Formik initialValues=  {{  name: '',
+            <Formik initialValues=  {{  name: gameToCreate.name,
                                         availability: gameToCreate.availability,
-                                        authors: [],
-                                        editor: '',
-                                        distributor: '',
-                                        publishYear: 9999,
-                                        description: '',
-                                        esarIndexes: '',
-                                        usualGameLength: '',
-                                        minPlayers: 1,
-                                        maxPlayers: 99,
-                                        minAge: 1,
-                                        location: '', }}
+                                        authors: gameToCreate.authors,
+                                        editor: gameToCreate.editor,
+                                        distributor: gameToCreate.distributor,
+                                        publishYear: gameToCreate.publishYear,
+                                        description: gameToCreate.description,
+                                        esarIndexes: gameToCreate.esarIndexes,
+                                        usualGameLength: gameToCreate.usualGameLength,
+                                        minPlayers: gameToCreate.minPlayers,
+                                        maxPlayers: gameToCreate.maxPlayers,
+                                        minAge: gameToCreate.minAge,
+                                        location: gameToCreate.location }}
                     validationSchema= { GAMECREATIONSCHEMA }
-                    onSubmit= { async (values, { resetForm }) => { await formSubmitHandler(values)
-                                                                         resetForm() }}
+                    onSubmit= { async (values) => { await formSubmitHandler(values)
+                                                          createGame() }}
             >
-            {({ handleSubmit, handleChange, handleBlur,
-                values, touched, isValid, errors, 
+            {({ handleSubmit, handleChange,
+                values, touched, errors, 
             }) => (
                 <Form noValidate onSubmit= { handleSubmit }>
                     <Form.Row>
@@ -146,6 +145,33 @@ function GameCreation() {
                         </Form.Control>
                     </FormGroup>
 
+                    <Form.Row>
+                        <FormGroup as= { Col } md='3' controlId= 'validationFormik10'>
+                            <FormLabel>Année de publication : </FormLabel>
+                            <Form.Control type= 'text' name= 'publishYear' value= { values.publishYear } onChange= { handleChange } 
+                                            isValid= { touched.publishYear && !errors.publishYear }>
+                            </Form.Control>
+                        </FormGroup>                    
+                        <FormGroup as= { Col } md='3' controlId= 'validationFormik11'>
+                            <FormLabel>Indexes ESAR : </FormLabel>
+                            <Form.Control type= 'text' name= 'esarIndexes' value= { values.esarIndexes } onChange= { handleChange } 
+                                            isValid= { touched.esarIndexes && !errors.esarIndexes }>
+                            </Form.Control>
+                        </FormGroup>
+                        <FormGroup as= { Col } md='3' controlId= 'validationFormik12'>
+                            <FormLabel>Temps de jeu moyen : </FormLabel>
+                            <Form.Control type= 'text' name= 'usualGameLength' value= { values.usualGameLength } onChange= { handleChange } 
+                                            isValid= { touched.usualGameLength && !errors.usualGameLength }>
+                            </Form.Control>
+                        </FormGroup>
+                        <FormGroup as= { Col } md='3' controlId= 'validationFormik12'>
+                            <FormLabel>Age conseillé : </FormLabel>
+                            <Form.Control type= 'text' name= 'minAge' value= { values.minAge } onChange= { handleChange } 
+                                            isValid= { touched.minAge && !errors.minAge }>
+                            </Form.Control>
+                        </FormGroup>
+                    </Form.Row>
+                    
                     <Button variant="primary" type='submit'>Créer</Button>
                 </Form>
             )}        

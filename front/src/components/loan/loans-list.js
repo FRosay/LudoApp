@@ -1,56 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Loan from './Loan';
 
 
-class LoansList extends React.Component {
+function LoansList() {
 
-  constructor(props) {
+  const [loans, setLoans] = useState([]);
+  const [init, setInit] = useState(true);
 
-    super(props)
-    this.state = {
-      loans: []
-    }
-
-    this.getAllLoans = this.getAllLoans.bind(this)
-    this.deleteAllLoans = this.deleteAllLoans.bind(this)
-
-    this.getAllLoans()
-  }
-
-  
-  getAllLoans() {
+  function getAllLoans() {
     return new Promise(() => {
       axios.get('http://localhost:5000/loans')
         .then((response) => {
-          this.setState({
-            loans: response.data
-          })
+          setLoans(response.data)
       })
     })
-  }
+  };
 
-  deleteAllLoans() {
+  function deleteAllLoans() {
     axios.delete('http://localhost:5000/loan/delete/')
+  };
+
+  if (init === true) {
+    getAllLoans()
+    setInit(false)
   }
 
-  render () {
-    return (
-      <div>
-        <h2>Tous les prêts :</h2>
-        <br/>
-        {this.state.loans.map((loan, index) => {
-          return <Loan  key= { index } loanId= { loan._id } loanNumber= { loan.loanNumber } 
-                        startDate= { loan.startDate } endDate= { loan.endDate } 
-                        memberId= { loan.memberId } gameId= { loan.gameId }></Loan>
-        })}
-        <br/>
-        <button onClick= { () => this.getAllLoans() }>Rafraîchir</button>
-        <button onClick= { () => this.deleteAllLoans() }>Supprimer tous les prêts</button>
-      </div>
-    )
-  }
- 
+  return (
+    <div>
+      <h2>Tous les prêts :</h2>
+      <br/>
+      {loans.map((loan, index) => {
+        return <Loan  key= { index } loanId= { loan._id } loanNumber= { loan.loanNumber } 
+                      startDate= { loan.startDate } endDate= { loan.endDate } 
+                      memberFirstName= { loan.member.firstName } memberLastName= { loan.member.lastName } gameName= { loan.game.name }></Loan>
+      })}
+      <br/>
+      <button onClick= { () => getAllLoans() }>Rafraîchir</button>
+      <button onClick= { () => deleteAllLoans() }>Supprimer tous les prêts</button>
+    </div>
+  )
 }
 
 export default LoansList;

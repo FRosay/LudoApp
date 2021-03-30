@@ -1,36 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 
-class Loan extends React.Component {
+function Loan(props) {
 
-  constructor(props) {
+    const [loan] = useState({loanId: props.loanId, loanNumber: props.loanNumber, startDate: props.startDate, endDate: props.endDate, 
+                            memberFirstName: props.memberFirstName, memberLastName: props.memberLastName, gameName: props.gameName});
 
-    super(props)
-    this.state = {
-      loanId: this.props.loanId,
-      loanNumber: this.props.loanNumber,
-      startDate: this.props.startDate,
-      endDate: this.props.endDate,
-      member: this.props.member,
-      game: this.props.game
-    }
+    let startDate = new Date(loan.startDate).toLocaleDateString()
+    let endDate = new Date(loan.endDate).toLocaleDateString()
 
-  }
-//<p>Jeu concerné : { this.state.game.name }</p>
-//<p>Prêté à : { this.state.member.fullName }</p>
-  render () {
-    let startDate = new Date(this.state.startDate).toLocaleDateString()
-    let endDate = new Date(this.state.endDate).toLocaleDateString()
     return (
         <div>
-            <p>Numéro de la réservation : { this.state.loanNumber }</p>
-            
-            <p>Prêté du : { startDate }</p>
-            <p>Jusqu'au : { endDate }</p>
+            <p>Numéro de la réservation : { loan.loanNumber }</p>
 
+            <p>Jeu prêté : { loan.gameName }</p>
+            
+            <p>Prêté à : { loan.memberFirstName } {loan.memberLastName }</p>
+
+            <p>Prêté du { startDate } au { endDate }</p>
         </div>
     )
-  }
 }
 
 export default Loan;

@@ -8,6 +8,8 @@ import MembersList from './components/member/members-list';
 import MemberCreation from './components/member/member-creation';
 import GamesList from './components/game/games-list';
 import GameCreation from './components/game/game-creation';
+import LoanCreation from './components/loan/loan-creation';
+import LoansList from './components/loan/loans-list';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
@@ -30,6 +32,8 @@ class App extends React.Component {
                   <Route path= '/membersList' component= { MembersList } />
                   <Route path= '/addGame' component= { GameCreation } />
                   <Route path= '/gamesList' component= { GamesList } />
+                  <Route path= '/addLoan' component= { LoanCreation } />
+                  <Route path= '/loansList' component= { LoansList } />
                 </Switch>
               </AnimatePresence>
             </div>

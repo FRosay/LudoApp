@@ -6,11 +6,11 @@ var loanSchema = new Schema({
     loanNumber: Number,
     startDate: Date,
     endDate: Date,
-    memberId: {
+    member: {
         type: ObjectId, 
         ref: 'Member'
     },
-    gameId: {
+    game: {
         type: ObjectId, 
         ref: 'Game'
     }

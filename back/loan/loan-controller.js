@@ -5,16 +5,16 @@ module.exports = class LoanController {
 	async create(loan) {
         await Loan.create({ 
             loanNumber: loan.loanNumber, 
-            startDate: loan.startDate,
-            endDate: loan.endDate,
-            memberId: loan.memberId,
-            gameId: loan.gameId })
+            startDate:  loan.startDate,
+            endDate:    loan.endDate,
+            member:     loan.memberId,
+            game:       loan.gameId })
 	}
 
 	async getAll() {
         return await Loan.find({})
-        .populate('memberId', '-_id')
-        .populate('gameId', '-_id')
+        .populate('member', '-_id')
+        .populate('game', '-_id')
         .exec()
     }
     

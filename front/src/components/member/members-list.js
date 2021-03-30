@@ -7,6 +7,7 @@ function MembersList() {
 
   const [members, setMembers] = useState([]);
   const [getAll, setGetAll] = useState(true);
+  const [shortDisplay] = useState(true);
 
   function getAllMembers() {
     return new Promise(() => {
@@ -31,7 +32,11 @@ function MembersList() {
         <h2>Liste des adhérent.e.s :</h2>
         <br/>
         {members.map((member, index) => {
-          return <Member key= { index } shortDisplay= { true } memberId= { member._id } firstName= { member.firstName } lastName= { member.lastName }></Member>
+          return  <Member key= { index } shortDisplay= { shortDisplay } memberId= { member._id } firstName= { member.firstName } lastName= { member.lastName } 
+                          adress= { member.adress } postalCode= { member.postalCode } city= { member.city } 
+                          phoneHome= { member.phoneHome } phoneMobile= { member.phoneMobile } email= { member.email } 
+                          contribution= { member.contribution } contributionRate= { member.contributionRate }>
+                  </Member>
         })}
         <br/>
         <button onClick= { () => getAllMembers() }>Rafraîchir</button>
