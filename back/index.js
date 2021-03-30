@@ -14,6 +14,7 @@ const loanController = new LoanController()
 // Connection
 
 mongoose.set('useUnifiedTopology', true);
+mongoose.set('useFindAndModify', false);
 
 const connectWithRetry = function () {
     return mongoose.connect("mongodb://localhost:27017/myapp", { useNewUrlParser: true })
@@ -38,7 +39,7 @@ api.use(bodyParser.json())
 
 api.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE, PATCH');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
@@ -134,6 +135,14 @@ api.post('/loan', async (req, res) => {
 });
 
 api.delete('/loan/delete/', async (req, res) => {
+    try {
+        await loanController.deleteOne(req.body.loanId)
+    } catch(e) {
+        res.send(e).status(500)
+    }
+});
+
+api.delete('/loans/delete/', async (req, res) => {
     try {
         await loanController.deleteAll()
     } catch(e) {

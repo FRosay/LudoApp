@@ -13,14 +13,18 @@ module.exports = class LoanController {
 
 	async getAll() {
         return await Loan.find({})
-        .populate('member', '-_id')
-        .populate('game', '-_id')
+        .populate('member')
+        .populate('game')
         .exec()
     }
     
     async getLast() {
         return await Loan.findOne().sort({ field: 'asc', _id: -1 }).limit(1)
     }
+
+    async deleteOne(loanId) {
+		await Loan.deleteOne({ _id: loanId })
+	}
 
 	async deleteAll() {
 		await Loan.find({}).deleteMany()
