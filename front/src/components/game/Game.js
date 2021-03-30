@@ -1,28 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 
-class Game extends React.Component {
+function Game(props) {
 
-  constructor(props) {
+    const [game] = useState({gameId: props.gameId, name: props.name, availability: props.availability, gameType: props.gameType, 
+                                      editor: props.editor, author: props.author, description: props.description,});
 
-    super(props)
-    this.state = {
-      gameId: this.props.gameId,
-      name: this.props.name,
-      availability: this.props.availability,
-      gameType: this.props.gameType,
-      editor: this.props.editor,
-      author: this.props.author,
-      description: this.props.description,
-    }
 
-  }
-
-  render () {
-    // eslint-disable-next-line
     let availability = ''
 
-    switch (this.state.availability) {
+    switch (game.availability) {
         case 'Available':
           availability = 'Disponible'
           break;
@@ -42,20 +29,19 @@ class Game extends React.Component {
 
     return (
         <div>
-            <p>Nom : { this.state.name }</p>
+            <p>Nom : { game.name }</p>
             <p>
               Statut : { availability } <br />
-              Type : { this.state.gameType }
+              Type : { game.gameType }
             </p>
             <p>
-              Edité par : { this.state.editor } <br />
-              Créé par : { this.state.author }
+              Edité par : { game.editor } <br />
+              Créé par : { game.author }
             </p>
-            <p>Description : { this.state.description }</p>
+            <p>Description : { game.description }</p>
             <br/>
         </div>
     )
-  }
 }
 
 export default Game;

@@ -15,36 +15,34 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 
 
-class App extends React.Component {
+function App() {
 
-  render () {
-    return (
-      <Router>
-        <div className= 'App'>
-          <div className= 'main-display'>
-            <div className='tab-inner'>
-              <AnimatePresence>
-                <Switch>
-                  <Route exact path= '/' component= { Login } />
-                  <Route path= '/login' component= { Login } />
-                  <Route path= '/home' component= { Home } />
-                  <Route path= '/addMember' component= { MemberCreation } />
-                  <Route path= '/membersList' component= { MembersList } />
-                  <Route path= '/addGame' component= { GameCreation } />
-                  <Route path= '/gamesList' component= { GamesList } />
-                  <Route path= '/addLoan' component= { LoanCreation } />
-                  <Route path= '/loansList' component= { LoansList } />
-                </Switch>
-              </AnimatePresence>
-            </div>
-            <div className='tab-inner'>
-              <Link className='nav-link' to={'/home'}>Retour à l'accueil</Link>
-            </div>
+  return (
+    <Router>
+      <div className= 'App'>
+        <div className= 'main-display'>
+          <div className='tab-inner'>
+            <AnimatePresence>
+              <Switch>
+                <Route exact path= '/' component= { Login } />
+                <Route path= '/login' component= { Login } />
+                <Route path= '/home' component= { Home } />
+                <Route path= '/addMember' component= { MemberCreation } />
+                <Route path= '/membersList' component= { MembersList } />
+                <Route path= '/addGame' component= { GameCreation } />
+                <Route path= '/gamesList' component= { GamesList } />
+                <Route path= '/addLoan' component= { LoanCreation } />
+                <Route path= '/loansList' component= { LoansList } />
+              </Switch>
+            </AnimatePresence>
+          </div>
+          <div className='tab-inner'>
+            <Link className='nav-link' to={'/home'}>Retour à l'accueil</Link>
           </div>
         </div>
-      </Router>
-    )
-  }
+      </div>
+    </Router>
+  )
 }
 
 export default App;
