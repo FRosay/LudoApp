@@ -106,9 +106,9 @@ api.get('/member/getlastnumber', async (_, res) => {
     res.json(lastMember);
 });
 
-api.post('/member', async (req, res) => {
+api.put('/member', async (req, res) => {
     try {
-        await memberController.create(req.body.member)
+        await memberController.updateOrCreate(req.body.member)
         res.sendStatus(200);
     } catch(e) {
         res.send(e).status(500);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loan from './Loan';
+import { Redirect } from 'react-router-dom';
 
 
 function LoansList() {
@@ -39,8 +40,8 @@ function LoansList() {
       <h2>Tous les prêts :</h2>
       <br/>
       {loans.map((loan, index) => {
-        return  <div key= { loan._id }> 
-                  <Loan  key= { index } loanId= { loan._id } loanNumber= { loan.loanNumber } startDate= { loan.startDate } endDate= { loan.endDate } 
+        return  <div key= { index }> 
+                  <Loan  key= { loan._id } loanId= { loan._id } loanNumber= { loan.loanNumber } startDate= { loan.startDate } endDate= { loan.endDate } 
                       memberFirstName= { loan.member.firstName } memberLastName= { loan.member.lastName } game= { loan.game }></Loan>
                   <button key= { loan._id+1 } onClick={ () => deleteOneLoan(loan._id, loan.game._id) }>Supprimer ce prêt</button>
                 </div>
