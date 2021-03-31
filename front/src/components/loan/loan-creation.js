@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import DatePicker from 'react-datepicker';
@@ -12,48 +12,58 @@ function LoanCreation() {
     const [loanToCreate, setLoanToCreate] = useState({ loanNumber: 1, startDate: null, endDate: null, memberId: 'Empty', gameId: 'Empty' })
     const [members, setMembers] = useState([]);
     const [games, setGames] = useState([]);
-    const [init, setInit] = useState(true);
 
     const LOANCREATIONSCHEMA = yup.object().shape({
         startDate: yup.date().default(function () {return new Date()}).max(yup.ref('endDate'), 'La date de début ne peut être postérieure à la date de fin').required('Requis'),
         endDate: yup.date().default(function () {return new Date()}).min(yup.ref('startDate'), 'La date de fin ne peut être antérieure à la date de début').required('Requis'),
     });
 
-    function setLoanNumber() {
-        axios.get('http://localhost:5000/loan/getlast').then((response) => {
-            if (response.data !== null && response.data.loanNumber !== undefined) {
-                let newLoan = {...loanToCreate}
-                newLoan.loanNumber = response.data.loanNumber + 1
-
-                setLoanToCreate(newLoan)
-            }
-        })
-    };
+    useEffect(() => {
+        setLoanNumber();
+        getAllMembers();
+        getAllAvailableGames();
+        // eslint-disable-next-line
+    }, []);
     
     function createLoan(newLoan) {
         if (newLoan.memberId !== 'Empty' && newLoan.gameId !== 'Empty') {
-            axios.post('http://localhost:5000/loan', {
-                loan: newLoan
-            }).then(() => {  axios.post('http://localhost:5000/game/availability', { gameId: newLoan.gameId, newAvailability: 'Loaned' }) })
-            .then(() => { setLoanNumber() })
+            axios.post('http://localhost:5000/loan', { loan: newLoan })
+            .then((loanResponse) => { 
+                if (loanResponse.status === 200) {
+                    axios.post('http://localhost:5000/game/availability', { gameId: newLoan.gameId, newAvailability: 'Loaned' })
+                    .then((availabilityResponse) => {
+                        if (availabilityResponse.status === 200) {
+                            setLoanNumber()
+                            getAllAvailableGames()
+                        }
+                    })
+                }
+            })
         }
     };
 
+    function setLoanNumber() {
+        axios.get('http://localhost:5000/loan/getlast')
+            .then((response) => {
+                if (response.data !== null && response.data.loanNumber !== undefined) {
+                    let newLoan = {...loanToCreate}
+                    newLoan.loanNumber = response.data.loanNumber + 1
+                    setLoanToCreate(newLoan)
+                }
+        })
+    };
+
     function getAllMembers() {
-        return new Promise(() => {
-            axios.get('http://localhost:5000/members')
-                .then((response) => {
-                setMembers(response.data)
-            })
+        axios.get('http://localhost:5000/members')
+            .then((response) => {
+            setMembers(response.data)
         })
     };
 
     function getAllAvailableGames() {
-        return new Promise(() => {
-            axios.get('http://localhost:5000/games-available')
-                .then((response) => {
-                setGames(response.data)
-            })
+        axios.get('http://localhost:5000/games-available')
+            .then((response) => {
+            setGames(response.data)
         })
     };
 
@@ -68,13 +78,6 @@ function LoanCreation() {
 
         setLoanToCreate(newLoan)
         createLoan(newLoan)
-    };
-    
-    if (init === true) {
-        setLoanNumber()
-        getAllMembers()
-        getAllAvailableGames()
-        setInit(false)
     };
 
     return (

@@ -77,7 +77,17 @@ api.post('/game/availability', async (req, res) => {
 
 api.delete('/game/delete/', async (req, res) => {
     try {
+        await gameController.deleteOne(req.body.gameId)
+        res.sendStatus(200);
+    } catch(e) {
+        res.send(e).status(500)
+    }
+});
+
+api.delete('/games/delete/', async (req, res) => {
+    try {
         await gameController.deleteAll()
+        res.sendStatus(200);
     } catch(e) {
         res.send(e).status(500)
     }
@@ -107,7 +117,17 @@ api.post('/member', async (req, res) => {
 
 api.delete('/member/delete/', async (req, res) => {
     try {
+        await memberController.deleteOne(req.body.memberId)
+        res.sendStatus(200);
+    } catch(e) {
+        res.send(e).status(500)
+    }
+});
+
+api.delete('/members/delete/', async (req, res) => {
+    try {
         await memberController.deleteAll()
+        res.sendStatus(200);
     } catch(e) {
         res.send(e).status(500)
     }
@@ -137,6 +157,7 @@ api.post('/loan', async (req, res) => {
 api.delete('/loan/delete/', async (req, res) => {
     try {
         await loanController.deleteOne(req.body.loanId)
+        res.sendStatus(200);
     } catch(e) {
         res.send(e).status(500)
     }
@@ -145,6 +166,7 @@ api.delete('/loan/delete/', async (req, res) => {
 api.delete('/loans/delete/', async (req, res) => {
     try {
         await loanController.deleteAll()
+        res.sendStatus(200);
     } catch(e) {
         res.send(e).status(500)
     }

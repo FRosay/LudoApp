@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -9,7 +9,6 @@ import './member.css'
 function MemberCreation() {
 
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
     const MEMBERCREATIONSCHEMA = Yup.object().shape({
         firstName: Yup.string().max(40, 'Trop long').required('Requis'),
         lastName: Yup.string().max(40, 'Trop long').required('Requis'),
@@ -22,10 +21,13 @@ function MemberCreation() {
         contribution: Yup.number().positive().integer().max(40, 'Trop long'),
         contributionRate: Yup.number().positive().integer().max(40, 'Trop long'),
     });
-
     const [memberToCreate, setMemberToCreate] = useState({memberNumber: 1, nameInfo: {firstName: '', lastName: ''}, adressInfo: {adress: '', postalCode: '', city: ''}, 
                                                           contactInfo: {phoneHome: '', phoneMobile: '', email: ''}, memberInfo: {memberId: '', contribution: '', contributionRate: ''}});
-    const [getLastNumber, setGetLastNumber] = useState(true)
+
+    useEffect(() => {
+        setMemberNumber();
+        // eslint-disable-next-line
+      }, []);
 
     function createMember(newMember) {
         axios.post('http://localhost:5000/member', {
@@ -62,11 +64,6 @@ function MemberCreation() {
         setMemberToCreate(newMember)
         createMember(newMember)       
     };
-
-    if (getLastNumber === true) {
-        setMemberNumber()
-        setGetLastNumber(false)
-      }
 
     return (
         <div>

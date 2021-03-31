@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Member from './Member';
 
@@ -6,25 +6,35 @@ import Member from './Member';
 function MembersList() {
 
   const [members, setMembers] = useState([]);
-  const [getAll, setGetAll] = useState(true);
   const [shortDisplay] = useState(true);
 
+  useEffect(() => {
+    getAllMembers();
+  }, []);
+
   function getAllMembers() {
-    return new Promise(() => {
       axios.get('http://localhost:5000/members')
         .then((response) => {
           setMembers(response.data)
       })
-    })
   }
+
+  async function deleteOneMember(memberId) {
+      axios.delete('http://localhost:5000/member/delete/', { data: { memberId: memberId } })
+      .then((response) => {
+        if (response.status === 200) {
+          getAllMembers()
+        }
+      })       
+  };
 
   function deleteAllMembers() {
-    axios.delete('http://localhost:5000/member/delete/');
-  }
-
-  if (getAll === true) {
-    getAllMembers()
-    setGetAll(false)
+    axios.delete('http://localhost:5000/member/delete/')
+      .then((response) => { 
+        if (response.status === 200) {
+          getAllMembers() 
+        }
+      })
   }
 
     return (
@@ -32,11 +42,14 @@ function MembersList() {
         <h2>Liste des adhérent.e.s :</h2>
         <br/>
         {members.map((member, index) => {
-          return  <Member key= { index } shortDisplay= { shortDisplay } memberId= { member._id } firstName= { member.firstName } lastName= { member.lastName } 
-                          adress= { member.adress } postalCode= { member.postalCode } city= { member.city } 
-                          phoneHome= { member.phoneHome } phoneMobile= { member.phoneMobile } email= { member.email } 
-                          contribution= { member.contribution } contributionRate= { member.contributionRate }>
-                  </Member>
+          return  <div key= { index }>
+                    <Member key= { member._id } shortDisplay= { shortDisplay } memberId= { member._id } firstName= { member.firstName } lastName= { member.lastName } 
+                            adress= { member.adress } postalCode= { member.postalCode } city= { member.city } 
+                            phoneHome= { member.phoneHome } phoneMobile= { member.phoneMobile } email= { member.email } 
+                            contribution= { member.contribution } contributionRate= { member.contributionRate }>
+                    </Member>
+                    <button key= { member._id+1 } onClick={ () => deleteOneMember(member._id) }>Supprimer cet.te adhérent.e</button>
+                  </div>
         })}
         <br/>
         <button onClick= { () => getAllMembers() }>Rafraîchir</button>

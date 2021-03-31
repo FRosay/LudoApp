@@ -25,6 +25,10 @@ module.exports = class MemberController {
         return await Member.findOne().sort({ field: 'asc', _id: -1 }).limit(1)
     }
 
+	async deleteOne(memberId) {
+		await Member.deleteOne({ _id: memberId })
+	}
+
 	async deleteAll() {
 		await Member.find({}).deleteMany()
 	}
