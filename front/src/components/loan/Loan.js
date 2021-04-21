@@ -8,14 +8,14 @@ function Loan(props) {
 
     let startDate = new Date(loan.startDate).toLocaleDateString()
     let endDate = new Date(loan.endDate).toLocaleDateString()
-    
+
     return (
         <div>
             <p>Numéro de la réservation : { loan.loanNumber }</p>
 
             <p>Jeu prêté : { loan.game !== undefined ? loan.game.name : '?' }</p>
             
-            <p>Prêté à : { loan.memberFirstName } {loan.memberLastName }</p>
+            <p>Prêté à : { loan.memberFirstName } { loan.memberLastName }</p>
 
             <p>Prêté du { startDate } au { endDate }</p>
         </div>

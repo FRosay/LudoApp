@@ -16,10 +16,10 @@ function MembersList() {
   }, []);
 
   function getAllMembers() {
-      axios.get('http://localhost:5000/members')
-        .then((response) => {
-          setMembers(response.data)
-      })
+    axios.get('http://localhost:5000/members')
+      .then((response) => {
+        setMembers(response.data)
+    })
   }
 
   function editMember(member) {

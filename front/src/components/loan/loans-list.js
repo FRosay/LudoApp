@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loan from './Loan';
-import { Redirect } from 'react-router-dom';
 
 
 function LoansList() {
@@ -24,11 +23,11 @@ function LoansList() {
   async function deleteOneLoan(loanId, gameId) {
       axios.delete('http://localhost:5000/loan/delete/', { data: { loanId: loanId } })
       .then((response) => {
-        if (response.status === 200) { 
+        if (response.status === 200) {
           axios.post('http://localhost:5000/game/availability', { gameId: gameId, newAvailability: 'Available' })
-          getAllLoans() 
+          getAllLoans()
         }
-      })      
+      })
   };
 
   function deleteAllLoans() {
@@ -41,8 +40,8 @@ function LoansList() {
       <br/>
       {loans.map((loan, index) => {
         return  <div key= { index }> 
-                  <Loan  key= { loan._id } loanId= { loan._id } loanNumber= { loan.loanNumber } startDate= { loan.startDate } endDate= { loan.endDate } 
-                      memberFirstName= { loan.member.firstName } memberLastName= { loan.member.lastName } game= { loan.game }></Loan>
+                  <Loan key= { loan._id } loanId= { loan._id } loanNumber= { loan.loanNumber } startDate= { loan.startDate } endDate= { loan.endDate } 
+                      memberFirstName= { loan.member.firstName } memberLastName= { loan.member.lastName } game= { loan.game } />
                   <button key= { loan._id+1 } onClick={ () => deleteOneLoan(loan._id, loan.game._id) }>Supprimer ce prêt</button>
                 </div>
       })}
