@@ -9,7 +9,7 @@ import MemberCreation from './components/member/member-creation';
 import GamesList from './components/game/games-list';
 import GameCreation from './components/game/game-creation';
 import LoanCreation from './components/loan/loan-creation';
-import LoansList from './components/loan/loans-list';
+import LoansList from './components/loan/loans-list/loans-list';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css'

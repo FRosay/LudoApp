@@ -11,13 +11,13 @@ function Loan(props) {
 
     return (
         <div>
-            <p>Numéro de la réservation : { loan.loanNumber }</p>
+            <td>{ loan.loanNumber }</td>
 
-            <p>Jeu prêté : { loan.game !== undefined ? loan.game.name : '?' }</p>
+            <td>{ loan.game !== undefined ? loan.game.name : '?' }</td>
             
-            <p>Prêté à : { loan.memberFirstName } { loan.memberLastName }</p>
+            <td>{ loan.memberFirstName } { loan.memberLastName }</td>
 
-            <p>Prêté du { startDate } au { endDate }</p>
+            <td>{ startDate }  { endDate }</td>
         </div>
     )
 }
