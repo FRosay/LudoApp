@@ -8,15 +8,6 @@ export default function LoansList() {
 
   const [loans, setLoans] = useState([]);
 
-  function getAllLoans() {
-    return new Promise(() => {
-      axios.get('http://localhost:5000/loans')
-        .then((response) => {
-          setLoans(response.data)
-        })
-    })
-  };
-
   const processData = React.useCallback(() => {
     if (Array.isArray(loans) === true) {
       return loans.map(d => {
@@ -32,10 +23,6 @@ export default function LoansList() {
       return []
     }
   }, [loans])
-
-  useEffect(() => {
-    setLoans(getAllLoans())
-  }, []);
 
   const data = React.useMemo(() => processData(), [processData])
 
@@ -65,6 +52,19 @@ export default function LoansList() {
     []
   )
 
+  useEffect(() => {
+    setLoans(getAllLoans())
+  }, []);
+
+  function getAllLoans() {
+    return new Promise(() => {
+      axios.get('http://localhost:5000/loans')
+        .then((response) => {
+          setLoans(response.data)
+        })
+    })
+  };
+
   async function deleteOneLoan(loanId, gameId) {
     axios.delete('http://localhost:5000/loan/delete/', { data: { loanId: loanId } })
       .then((response) => {
@@ -84,41 +84,8 @@ export default function LoansList() {
       <h2>Tous les prêts :</h2>
       <br />
       <TableView columns={columns} data={data} />
-
+      <br />
       <button onClick={() => deleteAllLoans()}>Supprimer tous les prêts</button>
     </div>
   )
-
-  /*
-      <Table striped bordered hover {...getTableProps()}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return (
-                    <td {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </td>
-                  )
-                })}
-              </tr>
-            )
-          })}
-        </tbody>
-      </Table>
-  */
-
 };
