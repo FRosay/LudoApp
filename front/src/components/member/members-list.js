@@ -118,19 +118,3 @@ export default function MembersList() {
     )
   }
 };
-
-/*
-const [shortDisplay] = useState(true);
-
-{members.map((member, index) => {
-  return  <div key= { index }>
-            <Member key= { member._id } shortDisplay= { shortDisplay } memberId= { member._id } firstName= { member.firstName } lastName= { member.lastName }
-                          adress= { member.adress } postalCode= { member.postalCode } city= { member.city }
-                          phoneHome= { member.phoneHome } phoneMobile= { member.phoneMobile } email= { member.email }
-                          contribution= { member.contribution } contributionRate= { member.contributionRate }>
-            </Member>
-            <button key= { member._id+1 } onClick={ () => deleteOneMember(member._id) }>Supprimer cet.te adhérent.e</button>
-            <button key= { member._id+2 } onClick={ () => editMember(member) }>Modifier cet.te adhérent.e</button>
-          </div>
-})}
-      */

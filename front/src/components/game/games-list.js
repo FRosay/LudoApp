@@ -103,14 +103,3 @@ export default function GamesList() {
     </div>
   )
 };
-
-/*
-{games.map((game, index) => {
-  return <div key={index}>
-          <Game key={game._id} gameId={game._id} name={game.name} availability={game.availability}
-            gameType={game.gameType} editor={game.editor} author={game.author} description={game.description}>
-          </Game>
-          <button key={game._id + 1} onClick={() => deleteOneGame(game._id)}>Supprimer ce jeu</button>
-        </div>
-})}
-*/
