@@ -22,9 +22,9 @@ export default function GamesList() {
         return ({
           _id: d._id,
           gameName: d.name,
-          gameStatus: d.availability,
+          gameStatus: getAvailability(d),
           gameEditor: d.editor,
-          gameAuthor: d.authors[0],
+          gameAuthor: getAuthors(d),
           gameDescription: d.description,
           gameDeleteButton: <button onClick={() => deleteOneGame(d._id)}>Supprimer</button>
         })
@@ -74,6 +74,36 @@ export default function GamesList() {
     getAllGames();
   }, []);
 
+  function getAvailability(game) {
+    let result = ''
+    switch (game.availability) {
+      case 'Available':
+        result = 'Disponible'
+        break;
+
+      case 'InRepair':
+        result = 'En réparations'
+        break;
+
+      case 'Loaned':
+        result = 'Prêté'
+        break;
+
+      default:
+        result = '?'
+        break;
+    }
+    return result;
+  };
+
+  function getAuthors(game) {
+    let result = ''
+    game.authors.forEach(author => {
+      result === '' ? result = result + author : result = result + ' & ' + author
+    });
+    return result
+  };
+  
   function getAllGames() {
     return new Promise(() => {
       axios.get('http://localhost:5000/games')

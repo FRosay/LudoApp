@@ -37,7 +37,7 @@ function GameCreation() {
         
         newGame.name            = values.name
         newGame.availability    = values.availability
-        newGame.authors         = values.authors
+        newGame.authors         = values.authors.split(',')
         newGame.editor          = values.editor
         newGame.distributor     = values.distributor
         newGame.publishYear     = values.publishYear
@@ -116,7 +116,7 @@ function GameCreation() {
                             </Form.Control>
                         </FormGroup>
                         <FormGroup as= { Col } md='4' controlId= 'validationFormik06'>
-                            <FormLabel>Créé par : </FormLabel>
+                            <FormLabel>Créé par (mettre une virgule entre les noms s'il y en a plusieurs): </FormLabel>
                             <Form.Control type= 'text' name= 'authors' value= { values.authors } onChange= { handleChange } 
                                             isValid= { touched.authors && !errors.authors }>
                             </Form.Control>

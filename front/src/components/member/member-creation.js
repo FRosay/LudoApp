@@ -26,7 +26,11 @@ function MemberCreation(props) {
 
     useEffect(() => {
         setMemberNumber();
-        {props.location.state ? setCreateOrEdit('Modifier') : setCreateOrEdit('Créer')}
+        if (props.location.state) {
+            setCreateOrEdit('Modifier')
+        } else {
+            setCreateOrEdit('Créer')
+        };
         // eslint-disable-next-line
     }, []);
 
