@@ -21,12 +21,14 @@ function MemberCreation(props) {
         contribution: Yup.number().positive().integer().max(40, 'Trop long'),
         contributionRate: Yup.number().positive().integer().max(40, 'Trop long'),
     });
-    const [currentMember, setCurrentMember] = useState( props.location.state ? props.location.state.referrer : {} )
+    const [currentMember, setCurrentMember] = useState(props.location.state ? props.location.state.referrer : {})
+    const [createOrEdit, setCreateOrEdit] = useState('')
 
     useEffect(() => {
         setMemberNumber();
+        {props.location.state ? setCreateOrEdit('Modifier') : setCreateOrEdit('Créer')}
         // eslint-disable-next-line
-      }, []);
+    }, []);
 
     function createOrModifyMember(newMember) {
         axios.put('http://localhost:5000/member', { member: newMember })
@@ -41,7 +43,7 @@ function MemberCreation(props) {
     function setMemberNumber() {
         axios.get('http://localhost:5000/member/getlastnumber').then((response) => {
             if (response.data !== null && response.data.memberNumber !== undefined) {
-                let newMember = {...currentMember}
+                let newMember = { ...currentMember }
                 newMember.memberNumber = response.data.memberNumber + 1
                 setCurrentMember(newMember)
             }
@@ -49,110 +51,112 @@ function MemberCreation(props) {
     }
 
     function formSubmitHandler(values) {
-        let newMember = {...currentMember}
+        let newMember = { ...currentMember }
 
-        newMember.firstName         = values.firstName
-        newMember.lastName          = values.lastName
-        newMember.adress            = values.adress
-        newMember.postalCode        = values.postalCode
-        newMember.city              = values.city
-        newMember.phoneHome         = values.phoneHome
-        newMember.phoneMobile       = values.phoneMobile
-        newMember.email             = values.email
-        newMember.contribution      = values.contribution
-        newMember.contributionRate  = values.contributionRate
+        newMember.firstName = values.firstName
+        newMember.lastName = values.lastName
+        newMember.adress = values.adress
+        newMember.postalCode = values.postalCode
+        newMember.city = values.city
+        newMember.phoneHome = values.phoneHome
+        newMember.phoneMobile = values.phoneMobile
+        newMember.email = values.email
+        newMember.contribution = values.contribution
+        newMember.contributionRate = values.contributionRate
 
         setCurrentMember(newMember)
-        createOrModifyMember(newMember)       
+        createOrModifyMember(newMember)
     };
 
     return (
         <div>
             <h2>Ajouter un.e adhérent.e</h2>
             <br />
-            <p>Numéro d'adhérent.e : { currentMember.memberNumber !== null ? currentMember.memberNumber : '?' }</p>
-            <Formik initialValues=  {{  firstName: currentMember.firstName, lastName: currentMember.lastName, 
-                                        adress: currentMember.adress, postalCode: currentMember.postalCode, city: currentMember.city,
-                                        phoneHome: currentMember.phoneHome, phoneMobile: currentMember.phoneMobile, email: currentMember.email,
-                                        contribution: currentMember.contribution, contributionRate: currentMember.contributionRate }}
-                    validateOnBlur=     { true }
-                    validateOnChange=   { true }
-                    validationSchema=   { MEMBERCREATIONSCHEMA }
-                    enableReinitialize= { true }
-                    onSubmit=           { async (values) => { await formSubmitHandler(values) }}
+            <p>Numéro d'adhérent.e : {currentMember.memberNumber !== null ? currentMember.memberNumber : '?'}</p>
+            <Formik initialValues={{
+                firstName: currentMember.firstName, lastName: currentMember.lastName,
+                adress: currentMember.adress, postalCode: currentMember.postalCode, city: currentMember.city,
+                phoneHome: currentMember.phoneHome, phoneMobile: currentMember.phoneMobile, email: currentMember.email,
+                contribution: currentMember.contribution, contributionRate: currentMember.contributionRate
+            }}
+                validateOnBlur={true}
+                validateOnChange={true}
+                validationSchema={MEMBERCREATIONSCHEMA}
+                enableReinitialize={true}
+                onSubmit={async (values) => { await formSubmitHandler(values) }}
             >
-                {({ handleSubmit, handleChange, handleBlur, errors, touched, values 
+                {({ handleSubmit, handleChange, handleBlur, errors, touched, values
                 }) => (
-                    <Form onSubmit= { handleSubmit }>
+                    <Form onSubmit={handleSubmit}>
                         <Form.Row>
-                            <FormGroup as= { Col } md='6' controlId= 'validationFormik01'>
+                            <FormGroup as={Col} md='6' controlId='validationFormik01'>
                                 <FormLabel>Nom : </FormLabel>
-                                <Form.Control type= 'text' name= 'lastName' value= { values.lastName } 
-                                            onChange= { handleChange } onBlur= { handleBlur } />
+                                <Form.Control type='text' name='lastName' value={values.lastName}
+                                    onChange={handleChange} onBlur={handleBlur} />
                             </FormGroup>
 
-                            <FormGroup as= { Col } md='6' controlId= 'validationFormik02'>
+                            <FormGroup as={Col} md='6' controlId='validationFormik02'>
                                 <FormLabel>Prénom : </FormLabel>
-                                <Form.Control type= 'text' name= 'firstName' value= { values.firstName } 
-                                            onChange= { handleChange } onBlur= { handleBlur } />
+                                <Form.Control type='text' name='firstName' value={values.firstName}
+                                    onChange={handleChange} onBlur={handleBlur} />
                             </FormGroup>
                         </Form.Row>
 
                         <Form.Row>
-                            <FormGroup as= { Col } md='12' controlId= 'validationFormik03'>
+                            <FormGroup as={Col} md='12' controlId='validationFormik03'>
                                 <FormLabel>Adresse : </FormLabel>
-                                <Form.Control type= 'text' name= 'adress' value= { values.adress } 
-                                            onChange= { handleChange } onBlur= { handleBlur } />
+                                <Form.Control type='text' name='adress' value={values.adress}
+                                    onChange={handleChange} onBlur={handleBlur} />
                             </FormGroup>
-                            <FormGroup as= { Col } md='6' controlId= 'validationFormik04'>
+                            <FormGroup as={Col} md='6' controlId='validationFormik04'>
                                 <FormLabel>Ville : </FormLabel>
-                                <Form.Control type= 'text' name= 'city' value= { values.city } 
-                                            onChange= { handleChange } onBlur= { handleBlur } />
+                                <Form.Control type='text' name='city' value={values.city}
+                                    onChange={handleChange} onBlur={handleBlur} />
                             </FormGroup>
-                            <FormGroup as= { Col } md='6' controlId= 'validationFormik05'>
+                            <FormGroup as={Col} md='6' controlId='validationFormik05'>
                                 <FormLabel>Code Postal : </FormLabel>
-                                <Form.Control type= 'number' name= 'postalCode' value= { values.postalCode } 
-                                            onChange= { handleChange } onBlur= { handleBlur } />
+                                <Form.Control type='number' name='postalCode' value={values.postalCode}
+                                    onChange={handleChange} onBlur={handleBlur} />
                             </FormGroup>
                         </Form.Row>
 
                         <Form.Row>
-                            <FormGroup as= { Col } md='3' controlId= 'validationFormik06'>
+                            <FormGroup as={Col} md='3' controlId='validationFormik06'>
                                 <FormLabel>Téléphone fixe : </FormLabel>
-                                <Form.Control type= 'text' name= 'phoneHome' value= { values.phoneHome } 
-                                            onChange= { handleChange } onBlur= { handleBlur } />
-                                { errors.phoneHome && touched.phoneHome ? <div>{ errors.phoneHome }</div> : null }
+                                <Form.Control type='text' name='phoneHome' value={values.phoneHome}
+                                    onChange={handleChange} onBlur={handleBlur} />
+                                {errors.phoneHome && touched.phoneHome ? <div>{errors.phoneHome}</div> : null}
                             </FormGroup>
-                            <FormGroup as= { Col } md='3' controlId= 'validationFormik07'>
+                            <FormGroup as={Col} md='3' controlId='validationFormik07'>
                                 <FormLabel>Téléphone mobile : </FormLabel>
-                                <Form.Control type= 'text' name= 'phoneMobile' value= { values.phoneMobile } 
-                                            onChange= { handleChange } onBlur= { handleBlur } />
-                                { errors.phoneMobile && touched.phoneMobile ? <div>{ errors.phoneMobile }</div> : null }
+                                <Form.Control type='text' name='phoneMobile' value={values.phoneMobile}
+                                    onChange={handleChange} onBlur={handleBlur} />
+                                {errors.phoneMobile && touched.phoneMobile ? <div>{errors.phoneMobile}</div> : null}
                             </FormGroup>
-                            <FormGroup as= { Col } md='6' controlId= 'validationFormik08'>
+                            <FormGroup as={Col} md='6' controlId='validationFormik08'>
                                 <FormLabel>Adresse mail : </FormLabel>
-                                <Form.Control type= 'email' name= 'email' value= { values.email } 
-                                            onChange= { handleChange } onBlur= { handleBlur } />
-                                { errors.email && touched.email ? <div>{ errors.email }</div> : null }
+                                <Form.Control type='email' name='email' value={values.email}
+                                    onChange={handleChange} onBlur={handleBlur} />
+                                {errors.email && touched.email ? <div>{errors.email}</div> : null}
                             </FormGroup>
                         </Form.Row>
 
                         <Form.Row>
-                            <FormGroup as= { Col } md='5' controlId= 'validationFormik09'>
+                            <FormGroup as={Col} md='5' controlId='validationFormik09'>
                                 <FormLabel>Contribution (en €) : </FormLabel>
-                                <Form.Control type= 'number' name= 'contribution' value= { values.contribution } 
-                                            onChange= { handleChange } onBlur= { handleBlur } />
+                                <Form.Control type='number' name='contribution' value={values.contribution}
+                                    onChange={handleChange} onBlur={handleBlur} />
                             </FormGroup>
-                            <FormGroup as= { Col } md='5' controlId= 'validationFormik10'>
+                            <FormGroup as={Col} md='5' controlId='validationFormik10'>
                                 <FormLabel>Taux de contribution (en %) : </FormLabel>
-                                <Form.Control type= 'number' name= 'contributionRate' value= { values.contributionRate } 
-                                            onChange= { handleChange } onBlur= { handleBlur } />
+                                <Form.Control type='number' name='contributionRate' value={values.contributionRate}
+                                    onChange={handleChange} onBlur={handleBlur} />
                             </FormGroup>
                         </Form.Row>
 
-                        <Button variant="primary" type='submit'>Créer</Button>
+                        <Button variant="primary" type='submit'>{createOrEdit}</Button>
                     </Form>
-                )}        
+                )}
             </Formik>
         </div>
     );

@@ -8,26 +8,42 @@ export default function LoansList() {
 
   const [loans, setLoans] = useState([]);
 
+  const deleteOneLoan = React.useCallback((loanId, gameId) => {
+    axios.delete('http://localhost:5000/loan/delete/', { data: { loanId: loanId } })
+      .then((response) => {
+        if (response.status === 200) {
+          axios.post('http://localhost:5000/game/availability', { gameId: gameId, newAvailability: 'Available' })
+          getAllLoans()
+        }
+      })
+  }, []);
+
   const processData = React.useCallback(() => {
     if (Array.isArray(loans) === true) {
       return loans.map(d => {
         return ({
+          _id: d._id,
           loanNumber: d.loanNumber,
           gameName: d.game.name,
           memberName: d.member.firstName + ' ' + d.member.lastName,
           loanStartDate: d.startDate,
-          loanEndDate: d.endDate
+          loanEndDate: d.endDate,
+          loanDeleteButton: <button onClick={() => deleteOneLoan(d._id, d.game._id)}>Supprimer</button>
         })
       })
     } else {
       return []
     }
-  }, [loans])
+  }, [loans, deleteOneLoan])
 
   const data = React.useMemo(() => processData(), [processData])
 
   const columns = React.useMemo(
     () => [
+      {
+        Header: '_id',
+        accessor: '_id',
+      },
       {
         Header: 'N°',
         accessor: 'loanNumber',
@@ -48,6 +64,10 @@ export default function LoansList() {
         Header: 'Au',
         accessor: 'loanEndDate',
       },
+      {
+        Header: '',
+        accessor: 'loanDeleteButton',
+      },
     ],
     []
   )
@@ -63,16 +83,6 @@ export default function LoansList() {
           setLoans(response.data)
         })
     })
-  };
-
-  async function deleteOneLoan(loanId, gameId) {
-    axios.delete('http://localhost:5000/loan/delete/', { data: { loanId: loanId } })
-      .then((response) => {
-        if (response.status === 200) {
-          axios.post('http://localhost:5000/game/availability', { gameId: gameId, newAvailability: 'Available' })
-          getAllLoans()
-        }
-      })
   };
 
   function deleteAllLoans() {

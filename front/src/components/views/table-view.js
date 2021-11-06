@@ -11,8 +11,9 @@ const TableView = (props) => {
         headerGroups,
         rows,
         prepareRow,
-    } = useTable({ columns: props.columns, data: props.data })
-
+    } = useTable({ columns: props.columns, data: props.data, initialState: {
+        hiddenColumns: ['_id']
+    } })
 
     return (<Table striped bordered hover {...getTableProps()}>
         <thead>
