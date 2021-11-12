@@ -1,9 +1,11 @@
 const Member = require('./member-model');
+const mongoose = require('mongoose');
 
 module.exports = class MemberController {
 
 	async updateOrCreate(member) {
 		const filter = { _id: member._id };
+		if (!filter._id) { filter._id = new mongoose.Types.ObjectId() }
 		const update = { 	
 							memberNumber: member.memberNumber, firstName: member.firstName, lastName: member.lastName, 
 							phoneHome: member.phoneHome, phoneMobile: member.phoneMobile, email: member.email,

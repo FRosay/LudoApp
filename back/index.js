@@ -57,11 +57,12 @@ api.get('/games-available', async (_, res) => {
     res.json(games);
 });
 
-api.post('/game', async (req, res) => {
+api.put('/game', async (req, res) => {
     try {
-        await gameController.create(req.body.game)
+        await gameController.updateOrCreate(req.body.game)
         res.sendStatus(200);
     } catch(e) {
+        console.log(e)
         res.send(e).status(500);
     }
 });
@@ -145,9 +146,9 @@ api.get('/loan/getlast', async (_, res) => {
     res.json(lastLoan);
 });
 
-api.post('/loan', async (req, res) => {
+api.put('/loan', async (req, res) => {
     try {
-        await loanController.create(req.body.loan)
+        await loanController.updateOrCreate(req.body.loan)
         res.sendStatus(200);
     } catch(e) {
         res.send(e).status(500);
