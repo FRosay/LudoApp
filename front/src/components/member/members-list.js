@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import TableView from '../views/table-view';
+import ModalPopup from '../views/modal-view';
 
 
 export default function MembersList() {
@@ -9,6 +10,7 @@ export default function MembersList() {
   const [members, setMembers] = useState([]);
   const [redirect, setRedirect] = useState(null);
   const [memberToEdit, setMemberToEdit] = useState({});
+  const [modalShow, setModalShow] = useState(false);
 
   const editMember = React.useCallback((member) => {
     setMemberToEdit(member)
@@ -29,6 +31,7 @@ export default function MembersList() {
       return members.map(d => {
         return ({
           _id: d._id,
+          memberDetail: <button onClick={() => setModalShow(true)}>Details</button>,
           memberId: d._id,
           memberFirstName: d.firstName,
           memberLastName: d.lastName,
@@ -50,6 +53,10 @@ export default function MembersList() {
       {
         Header: '_id',
         accessor: '_id',
+      },
+      {
+        Header: '',
+        accessor: 'memberDetail',
       },
       {
         Header: 'Id',
@@ -108,6 +115,10 @@ export default function MembersList() {
   } else {
     return (
       <div>
+        <ModalPopup
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
         <h2>Liste des adhérent.e.s :</h2>
         <br />
         <TableView columns={columns} data={data} />

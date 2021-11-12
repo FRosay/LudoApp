@@ -32,7 +32,7 @@ function MemberCreation(props) {
             setCreateOrEdit('Créer')
         };
         // eslint-disable-next-line
-    }, []);
+    }, [props.location.state]);
 
     function createOrModifyMember(newMember) {
         axios.put('http://localhost:5000/member', { member: newMember })
