@@ -25,9 +25,9 @@ function LoanCreation() {
         // eslint-disable-next-line
     }, []);
     
-    function createLoan(newLoan) {
+    function createOrModifyLoan(newLoan) {
         if (newLoan.memberId !== 'Empty' && newLoan.gameId !== 'Empty') {
-            axios.post('http://localhost:5000/loan', { loan: newLoan })
+            axios.put('http://localhost:5000/loan', { loan: newLoan })
             .then((loanResponse) => { 
                 if (loanResponse.status === 200) {
                     axios.post('http://localhost:5000/game/availability', { gameId: newLoan.gameId, newAvailability: 'Loaned' })
@@ -77,7 +77,7 @@ function LoanCreation() {
         newLoan.gameId      = values.borrowedGame
 
         setLoanToCreate(newLoan)
-        createLoan(newLoan)
+        createOrModifyLoan(newLoan)
     };
 
     return (

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import TableView from '../views/table-view';
-import ModalPopup from '../views/modal-view';
-
+import TableView from '../views/TableView';
+import ModalView from '../views/modal-view';
+import { Sorter } from "../../utils/TableDataSorter";
 
 export default function MembersList() {
 
   const [members, setMembers] = useState([]);
   const [redirect, setRedirect] = useState(null);
   const [memberToEdit, setMemberToEdit] = useState({});
+  const [memberToDetail, setMemberToDetail] = useState({});
   const [modalShow, setModalShow] = useState(false);
 
   const editMember = React.useCallback((member) => {
@@ -30,8 +31,7 @@ export default function MembersList() {
     if (Array.isArray(members) === true) {
       return members.map(d => {
         return ({
-          _id: d._id,
-          memberDetail: <button onClick={() => setModalShow(true)}>Details</button>,
+          memberDetail: <button onClick={() => {setMemberToDetail(d); setModalShow(true)}}>Details</button>,
           memberId: d._id,
           memberFirstName: d.firstName,
           memberLastName: d.lastName,
@@ -51,40 +51,40 @@ export default function MembersList() {
   const columns = React.useMemo(
     () => [
       {
-        Header: '_id',
-        accessor: '_id',
+        title: '',
+        dataIndex: 'memberDetail',
       },
       {
-        Header: '',
-        accessor: 'memberDetail',
+        title: 'Id',
+        dataIndex: 'memberId',
       },
       {
-        Header: 'Id',
-        accessor: 'memberId',
+        title: 'Prénom',
+        dataIndex: 'memberFirstName',
+        sorter: { compare: Sorter.DEFAULT, }
       },
       {
-        Header: 'Prénom',
-        accessor: 'memberFirstName',
+        title: 'Nom',
+        dataIndex: 'memberLastName',
+        sorter: { compare: Sorter.DEFAULT, }
       },
       {
-        Header: 'Nom',
-        accessor: 'memberLastName',
+        title: 'Ville',
+        dataIndex: 'memberCity',
+        sorter: { compare: Sorter.DEFAULT, }
       },
       {
-        Header: 'Ville',
-        accessor: 'memberCity',
+        title: 'Adresse mail',
+        dataIndex: 'memberEmail',
+        sorter: { compare: Sorter.DEFAULT, }
       },
       {
-        Header: 'Adresse mail',
-        accessor: 'memberEmail',
+        title: '',
+        dataIndex: 'memberEditButton',
       },
       {
-        Header: '',
-        accessor: 'memberEditButton',
-      },
-      {
-        Header: '',
-        accessor: 'memberDeleteButton',
+        title: '',
+        dataIndex: 'memberDeleteButton',
       },
     ],
     []
@@ -115,13 +115,16 @@ export default function MembersList() {
   } else {
     return (
       <div>
-        <ModalPopup
+        <ModalView
           show={modalShow}
           onHide={() => setModalShow(false)}
+          heading={'Fiche d\'adhérent.e'}
+          title={memberToDetail.firstName + ' ' + memberToDetail.lastName}
+          text={'TO DO : afficher la cotisation, conditions d\'adhésion etc.'}
         />
         <h2>Liste des adhérent.e.s :</h2>
         <br />
-        <TableView columns={columns} data={data} />
+        <TableView rowKey='memberId' columns={columns} data={data} />
         <br />
         <button onClick={() => getAllMembers()}>Rafraîchir</button>
         <button onClick={() => deleteAllMembers()}>Supprimer tous les membres</button>

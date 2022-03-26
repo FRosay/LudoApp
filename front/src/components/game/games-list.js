@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import TableView from '../views/table-view';
-import ModalPopup from '../views/modal-view';
+import TableView from '../views/TableView';
+import ModalView from '../views/modal-view';
+import { Sorter } from "../../utils/TableDataSorter";
 
 
 export default function GamesList() {
@@ -51,40 +52,40 @@ export default function GamesList() {
   const columns = React.useMemo(
     () => [
       {
-        Header: '_id',
-        accessor: '_id',
+        title: '',
+        dataIndex: 'gameDetail',
       },
       {
-        Header: '',
-        accessor: 'gameDetail',
+        title: 'Nom',
+        dataIndex: 'gameName',
+        sorter: { compare: Sorter.DEFAULT, }
       },
       {
-        Header: 'Nom',
-        accessor: 'gameName',
+        title: 'Statut',
+        dataIndex: 'gameStatus',
+        sorter: { compare: Sorter.DEFAULT, }
       },
       {
-        Header: 'Statut',
-        accessor: 'gameStatus',
+        title: 'Edité par',
+        dataIndex: 'gameEditor',
+        sorter: { compare: Sorter.DEFAULT, }
       },
       {
-        Header: 'Edité par',
-        accessor: 'gameEditor',
+        title: 'Créé par',
+        dataIndex: 'gameAuthor',
+        sorter: { compare: Sorter.DEFAULT, }
       },
       {
-        Header: 'Créé par',
-        accessor: 'gameAuthor',
+        title: 'Description',
+        dataIndex: 'gameDescription',
       },
       {
-        Header: 'Description',
-        accessor: 'gameDescription',
+        title: '',
+        dataIndex: 'gameEditButton',
       },
       {
-        Header: '',
-        accessor: 'gameEditButton',
-      },
-      {
-        Header: '',
-        accessor: 'gameDeleteButton',
+        title: '',
+        dataIndex: 'gameDeleteButton',
       },
     ],
     []
@@ -149,13 +150,13 @@ export default function GamesList() {
   } else {
     return (
       <div>
-        <ModalPopup
+        <ModalView
           show={modalShow}
           onHide={() => setModalShow(false)}
         />
         <h2>Tous les jeux :</h2>
         <br />
-        <TableView columns={columns} data={data} />
+        <TableView rowKey='gameId' columns={columns} data={data} />
         <br />
         <button onClick={() => getAllGames()}>Rafraîchir</button>
         <button onClick={() => deleteAllGames()}>Supprimer tous les jeux</button>
