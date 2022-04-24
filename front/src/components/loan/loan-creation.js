@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import DatePicker from 'react-datepicker';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { Form, FormGroup, FormLabel, Col, Button } from 'react-bootstrap'
+import { LoanApi, GameApi } from '../../api/api';
 
 
 function LoanCreation() {
@@ -27,10 +27,9 @@ function LoanCreation() {
     
     function createOrModifyLoan(newLoan) {
         if (newLoan.memberId !== 'Empty' && newLoan.gameId !== 'Empty') {
-            axios.put('http://localhost:5000/loan', { loan: newLoan })
-            .then((loanResponse) => { 
+            LoanApi.create({ loan: newLoan }).then((loanResponse) => { 
                 if (loanResponse.status === 200) {
-                    axios.post('http://localhost:5000/game/availability', { gameId: newLoan.gameId, newAvailability: 'Loaned' })
+                    GameApi.changeAvailability({ gameId: newLoan.gameId, newAvailability: 'Loaned' })
                     .then((availabilityResponse) => {
                         if (availabilityResponse.status === 200) {
                             setLoanNumber()
@@ -43,26 +42,25 @@ function LoanCreation() {
     };
 
     function setLoanNumber() {
-        axios.get('http://localhost:5000/loan/getlast')
-            .then((response) => {
-                if (response.data !== null && response.data.loanNumber !== undefined) {
-                    let newLoan = {...loanToCreate}
-                    newLoan.loanNumber = response.data.loanNumber + 1
-                    setLoanToCreate(newLoan)
-                }
+        LoanApi.getOneLastCreated().then((response) => {
+            let newLoan = {...loanToCreate}
+            if (response.data !== null && response.data.loanNumber !== undefined) {
+                newLoan.loanNumber = response.data.loanNumber + 1
+            } else {
+                newLoan.loanNumber = 1
+            }
+            setLoanToCreate(newLoan)
         })
     };
 
     function getAllMembers() {
-        axios.get('http://localhost:5000/members')
-            .then((response) => {
+        LoanApi.getAll().then((response) => {
             setMembers(response.data)
         })
     };
 
     function getAllAvailableGames() {
-        axios.get('http://localhost:5000/games-available')
-            .then((response) => {
+        GameApi.getAllAvailable().then((response) => {
             setGames(response.data)
         })
     };

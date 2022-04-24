@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Form, FormGroup, FormLabel, Col, Button } from 'react-bootstrap'
 import './member.css'
+import { MemberApi } from '../../api/api';
 
 
 function MemberCreation(props) {
@@ -35,7 +35,7 @@ function MemberCreation(props) {
     }, [props.location.state]);
 
     function createOrModifyMember(newMember) {
-        axios.put('http://localhost:5000/member', { member: newMember })
+        MemberApi.create({ member:newMember })
             .then((response) => {
                 if (response.status === 200) {
                     alert('Membre ajouté : ' + newMember.firstName + ' ' + newMember.lastName + '.')
@@ -45,12 +45,14 @@ function MemberCreation(props) {
     };
 
     function setMemberNumber() {
-        axios.get('http://localhost:5000/member/getlastnumber').then((response) => {
+        MemberApi.getOneLastCreated().then((response) => {
+            let newMember = { ...currentMember }
             if (response.data !== null && response.data.memberNumber !== undefined) {
-                let newMember = { ...currentMember }
                 newMember.memberNumber = response.data.memberNumber + 1
-                setCurrentMember(newMember)
+            } else {
+                newMember.memberNumber = 1
             }
+            setCurrentMember(newMember)
         })
     }
 

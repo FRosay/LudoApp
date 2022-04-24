@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import TableView from '../views/TableView';
 import ModalView from '../views/modal-view';
-import { Sorter } from "../../utils/TableDataSorter";
+import { Sorter } from '../../utils/TableDataSorter';
+import { MemberApi } from '../../api/api';
 
 export default function MembersList() {
 
@@ -19,7 +20,7 @@ export default function MembersList() {
   }, []);
 
   const deleteOneMember = React.useCallback((memberId) => {
-    axios.delete('http://localhost:5000/member/delete/', { data: { memberId: memberId } })
+    MemberApi.remove(memberId)
       .then((response) => {
         if (response.status === 200) {
           getAllMembers()
@@ -95,7 +96,7 @@ export default function MembersList() {
   }, []);
 
   function getAllMembers() {
-    axios.get('http://localhost:5000/members')
+    MemberApi.getAll()
       .then((response) => {
         setMembers(response.data)
       })

@@ -13,27 +13,26 @@ module.exports = class GameController {
 			minPlayers: game.minPlayers, maxPlayers: game.maxPlayers, minAge: game.minAge,
 			location: game.location
 		};
-		await Game.findOneAndUpdate(filter, update, { new: true, upsert: true })
-	}
+		await Game.findOneAndUpdate(filter, update, { new: true, upsert: true });
+	};
 
 	async changeGameAvailability(gameId, newAvailability) {
-		await Game.findByIdAndUpdate(gameId, { availability: newAvailability })
-	}
+		await Game.findByIdAndUpdate(gameId, { availability: newAvailability });
+	};
 
 	async getAll() {
-		return await Game.find({}).exec()
-	}
+		return await Game.find({}).exec();
+	};
 
 	async getAvailable() {
-		return await Game.find({ availability: 'Available' }).exec()
-	}
+		return await Game.find({ availability: 'Available' }).exec();
+	};
+
+	async getOne(gameId) {
+		return await Game.findOne({ _id: gameId }).exec();
+	};
 
 	async deleteOne(gameId) {
-		await Game.deleteOne({ _id: gameId })
-	}
-
-	async deleteAll() {
-		await Game.find({}).deleteMany()
-	}
-
-}
+		await Game.deleteOne({ _id: gameId });
+	};
+};

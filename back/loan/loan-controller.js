@@ -14,25 +14,24 @@ module.exports = class LoanController {
             game: loan.gameId
         }
         await Loan.findOneAndUpdate(filter, update, { new: true, upsert: true })
-    }
+    };
 
     async getAll() {
         return await Loan.find({})
             .populate('member')
             .populate('game')
             .exec()
-    }
+    };
+
+	async getOne(loanId) {
+		return await Loan.findOne({ _id: loanId }).exec();
+	};
 
     async getLast() {
         return await Loan.findOne().sort({ field: 'asc', _id: -1 }).limit(1)
-    }
+    };
 
     async deleteOne(loanId) {
         await Loan.deleteOne({ _id: loanId })
-    }
-
-    async deleteAll() {
-        await Loan.find({}).deleteMany()
-    }
-
-}
+    };
+};

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import TableView from '../views/TableView';
 import ModalView from '../views/modal-view';
 import { Sorter } from "../../utils/TableDataSorter";
+import { GameApi } from '../../api/api';
 
 
 export default function GamesList() {
@@ -19,12 +19,11 @@ export default function GamesList() {
   }, []);
 
   const deleteOneGame = React.useCallback((gameId) => {
-    axios.delete('http://localhost:5000/game/delete/', { data: { gameId: gameId } })
-      .then((response) => {
-        if (response.status === 200) {
-          getAllGames()
-        }
-      })
+    GameApi.remove(gameId).then((response) => {
+      if (response.status === 200) {
+        getAllGames()
+      }
+    })
   }, []);
 
   const processData = React.useCallback(() => {
@@ -129,20 +128,17 @@ export default function GamesList() {
 
   function getAllGames() {
     return new Promise(() => {
-      axios.get('http://localhost:5000/games')
-        .then((response) => {
-          setGames(response.data);
-        })
+      GameApi.getAll().then((response) => {
+        setGames(response.data);
+      })
     })
   }
 
   function deleteAllGames() {
-    axios.delete('http://localhost:5000/games/delete/')
-      .then((response) => {
-        if (response.status === 200) {
-          getAllGames()
-        }
-      })
+    games.forEach((game) => {
+      GameApi.remove(game._id)
+    })
+    getAllGames()
   }
 
   if (redirect) {

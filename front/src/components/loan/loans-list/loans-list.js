@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import TableView from '../../views/TableView';
 import ModalView from '../../views/modal-view';
 import { Sorter } from "../../../utils/TableDataSorter";
+import { LoanApi, GameApi } from '../../../api/api';
 
 
 export default function LoansList() {
@@ -20,18 +20,16 @@ export default function LoansList() {
   }, []);
 
   const deleteOneLoan = React.useCallback((loanId, gameId = '') => {
-    axios.delete('http://localhost:5000/loan/delete/', { data: { loanId: loanId } })
-      .then((response) => {
-        if (response.status === 200 && gameId !== '') {
-          axios.post('http://localhost:5000/game/availability', { gameId: gameId, newAvailability: 'Available' })
-        }
-      })
+    LoanApi.remove(loanId).then((response) => {
+      if (response.status === 200 && gameId !== '') {
+        GameApi.changeAvailability({ gameId: gameId, newAvailability: 'Available' })
+      }
+    })
   }, []);
 
   const getAllLoans = React.useCallback(() => {
     return new Promise(() => {
-      axios.get('http://localhost:5000/loans')
-        .then((response) => {
+      LoanApi.getAllLoans().then((response) => {
           setLoans(response.data)
         })
     })
@@ -40,7 +38,7 @@ export default function LoansList() {
   const deleteAllLoans = React.useCallback(() => {
     loans.forEach((loan) => {
       if (loan.game !== null) {
-        deleteOneLoan(loan._id, loan.game._id);
+        deleteOneLoan(loan._id, loan.game._id)
       } else {
         deleteOneLoan(loan._id);
       }
